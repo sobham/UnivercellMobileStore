@@ -24,6 +24,7 @@ public class FundStatus {
 	private float returns;
 	private float fundsout;
 	private float deposits;
+	private Date today;
 	public int getStatusId() {
 		return statusId;
 	}
@@ -89,6 +90,18 @@ public class FundStatus {
 	}
 	public void setDeposits(float deposits) {
 		this.deposits = deposits;
+	}
+	/**
+	 * @return the today
+	 */
+	public Date getToday() {
+		return today;
+	}
+	/**
+	 * @param today the today to set
+	 */
+	public void setToday(Date today) {
+		this.today = today;
 	}
 	
 	

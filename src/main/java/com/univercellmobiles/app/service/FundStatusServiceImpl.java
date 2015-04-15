@@ -13,7 +13,7 @@ import com.univercellmobiles.app.dao.BrandDao;
 import com.univercellmobiles.app.dao.FundStatusDao;
 import com.univercellmobiles.app.dao.TransactionsDao;
 
-@Service("fundStatusDao")
+@Service("fundStatusService")
 @Transactional
 public class FundStatusServiceImpl implements FundStatusService {
 	@Autowired
