@@ -81,7 +81,8 @@ public class PhoneStockDaoImpl implements PhoneStockDao {
 	public List<PhoneStock> getPurchaseByRange(Date fromDate, Date toDate) {
 		// TODO Auto-generated method stub
 		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String query = "from PhoneStock where arrivalDate between "+sdf.format(fromDate)+" and  "+sdf.format(toDate)+"";
+		 //between str_to_date('2015-03-16','%Y-%m-%d') and  str_to_date('2015-04-16','%Y-%m-%d');
+		String query = "from PhoneStock where arrivalDate between str_to_date('"+sdf.format(fromDate)+"','%Y-%m-%d') and  str_to_date('"+sdf.format(toDate)+"','%Y-%m-%d')";
 		System.out.println(query);
 		return getCurrentSession().createQuery(query).list();
 	}

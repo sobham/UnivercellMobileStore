@@ -42,6 +42,7 @@ import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
 
 import javax.swing.JFormattedTextField;
+import javax.swing.JComboBox;
 
 
 
@@ -156,7 +157,7 @@ public class AddStock extends JFrame {
 		
 
 		JLabel lblOffer = new JLabel("Offer Details");
-		lblOffer.setBounds(67, 276, 153, 22);
+		lblOffer.setBounds(67, 312, 153, 22);
 		panel.add(lblOffer);
 
 		JLabel lblDescription = new JLabel("Description");
@@ -261,7 +262,7 @@ public class AddStock extends JFrame {
 		panel.add(lblMarginValue);
 
 		textAreaOffer = new JTextArea();
-		textAreaOffer.setBounds(279, 275, 415, 39);
+		textAreaOffer.setBounds(279, 311, 415, 39);
 		panel.add(textAreaOffer);
 
 		textAreaDesc = new JTextArea();
@@ -295,6 +296,19 @@ public class AddStock extends JFrame {
 		    ftfMargin.setText("0");
 		    ftfMargin.setBounds(279, 232, 79, 20);
 		    panel.add(ftfMargin);
+		    
+		    JLabel lblDistributor = new JLabel("Distributor");
+		    lblDistributor.setBounds(67, 264, 115, 22);
+		    panel.add(lblDistributor);
+		    
+		    JComboBox comboBox = new JComboBox();
+		    comboBox.setBounds(279, 265, 193, 22);
+		    comboBox.addItem("UNIVERCELL");
+		    comboBox.addItem("OTHERS");
+		    panel.add(comboBox);
+		    
+		
+		    
 		    DocumentListener documentListener = new DocumentListener() {
 			      public void changedUpdate(DocumentEvent documentEvent) {
 			      }
