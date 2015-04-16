@@ -1,5 +1,6 @@
 package com.univercellmobiles.app.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,11 @@ public class SalesServiceImpl implements SalesService {
 	public float getAllProfit() {
 		// TODO Auto-generated method stub
 		return salesDao.getAllProfit();
+	}
+
+	public List<Sales> getSalesByRange(Date fromDate, Date toDate) {
+		// TODO Auto-generated method stub
+		return salesDao.getSalesByRange(fromDate,toDate);
 	}
 
 }

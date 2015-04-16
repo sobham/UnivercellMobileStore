@@ -15,7 +15,6 @@ public class Sales {
     @Id
 	private int saleId;
 	private Float salePrice;
-	
 	private Float dp;
 	private Float margin;
 	private Date salesDate;
@@ -28,6 +27,7 @@ public class Sales {
 	private String imeiNo;
 	private String custName;
 	private String custContact;
+	private String Distributor;
 	private Float vat;
 	
 	
@@ -197,6 +197,18 @@ public class Sales {
 	 */
 	public void setVat(Float vat) {
 		this.vat = vat;
+	}
+	/**
+	 * @return the distributor
+	 */
+	public String getDistributor() {
+		return Distributor;
+	}
+	/**
+	 * @param distributor the distributor to set
+	 */
+	public void setDistributor(String distributor) {
+		Distributor = distributor;
 	}
 	
 	

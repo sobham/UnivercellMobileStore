@@ -57,12 +57,11 @@ import java.awt.Dimension;
 
 import javax.swing.JTextArea;
 
-public class PurchaseHistory extends JFrame {
+public class SalesHistory extends JFrame {
 	private JTextField txtPrice;
 	private JTable table;
 	  private JTable tableStock;
-	  private TableRowSorter<StockTableModel> sorter;
-	  JTextArea txtOffer;
+	  private TableRowSorter<SalesTableModel> sorter;
 	  JTextArea txtDesc;
 	private boolean DEBUG = false;
 	private Float totalCost = (float) 0.0;
@@ -76,9 +75,14 @@ public class PurchaseHistory extends JFrame {
 		private JLabel lblFromDate;
 		private JLabel lblToDate;
 		private JLabel lblTotalPurchaseMade;
-		private JTextField txtPurchase;
+		private JTextField txtSales;
 		private JLabel lblIncentivesForThe;
 		private JTextField txtIncentives;
+		private JLabel lblMargin;
+		private JTextField txtMargin;
+		private JTextField txtDP;
+		private JLabel lblTotalPruchases;
+		private JTextField txtPurchases;
 	
 	
 	/**
@@ -88,7 +92,7 @@ public class PurchaseHistory extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PurchaseHistory frame = new PurchaseHistory();
+					SalesHistory frame = new SalesHistory();
 				
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -101,7 +105,7 @@ public class PurchaseHistory extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PurchaseHistory() {
+	public SalesHistory() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 771, 707);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
@@ -128,17 +132,17 @@ public class PurchaseHistory extends JFrame {
 	    toDatePicker.setBounds(379, 32,160,28);
 	    panel.add(toDatePicker);
 	    
-	    lblTotalPurchaseMade = new JLabel("Total Purchases");
+	    lblTotalPurchaseMade = new JLabel("Total Sales");
 		lblTotalPurchaseMade.setBounds(379, 295, 122, 22);
 		panel.add(lblTotalPurchaseMade);
 		
-		txtPurchase = new JTextField();
-		txtPurchase.setEditable(false);
-		txtPurchase.setBounds(505, 296, 187, 20);
-		panel.add(txtPurchase);
-		txtPurchase.setColumns(10);
+		txtSales = new JTextField();
+		txtSales.setEditable(false);
+		txtSales.setBounds(505, 296, 187, 20);
+		panel.add(txtSales);
+		txtSales.setColumns(10);
 		
-		lblIncentivesForThe = new JLabel("Incentives");
+		lblIncentivesForThe = new JLabel("Total Profit");
 		lblIncentivesForThe.setBounds(379, 329, 94, 22);
 		panel.add(lblIncentivesForThe);
 		
@@ -148,8 +152,18 @@ public class PurchaseHistory extends JFrame {
 		txtIncentives.setBounds(505, 330, 187, 20);
 		panel.add(txtIncentives);
 		txtIncentives.setColumns(10);
-		 final StockTableModel  stockModel = new StockTableModel();
-	        sorter = new TableRowSorter<StockTableModel>(stockModel);
+		
+		lblTotalPruchases = new JLabel("Total Pruchases");
+		lblTotalPruchases.setBounds(379, 369, 94, 22);
+		panel.add(lblTotalPruchases);
+		
+		txtPurchases = new JTextField();
+		txtPurchases.setEditable(false);
+		txtPurchases.setBounds(505, 370, 187, 20);
+		panel.add(txtPurchases);
+		txtPurchases.setColumns(10);
+		 final SalesTableModel  salesModel = new SalesTableModel();
+	        sorter = new TableRowSorter<SalesTableModel>(salesModel);
 	        
 
 	        //Create the scroll pane and add the table to it.
@@ -157,7 +171,7 @@ public class PurchaseHistory extends JFrame {
 	        stockScrollPane.setBounds(67, 71, 625, 214);
 	        //Add the scroll pane to this panel.
 	        panel.add(stockScrollPane);
-	        tableStock = new JTable(stockModel);
+	        tableStock = new JTable(salesModel);
 	        stockScrollPane.setViewportView(tableStock);
 	        tableStock.setRowSorter(sorter);
 	        tableStock.setPreferredScrollableViewportSize(new Dimension(500, 500));
@@ -179,11 +193,11 @@ public class PurchaseHistory extends JFrame {
 	        	        	                        } else {
 	        	        	                            int modelRow = 
 	        	        	                            		tableStock.convertRowIndexToModel(viewRow);
-	        	        	                            PhoneStock ps = stockModel.getRow(modelRow);
-	        	        	                            txtPrice.setText(ps.getSp().toString());
-	        	        	                            txtDesc.setText(ps.getDescription());
-	        	        	                            txtOffer.setText(ps.getOffer());
-	        	        	                            txtModel.setText(ps.getPhModel());
+	        	        	                            Sales sales = salesModel.getRow(modelRow);
+	        	        	                            txtPrice.setText(Float.toString(sales.getSalePrice()));
+	        	        	                            txtDesc.setText("Name: "+sales.getCustName()+"Contact: " +sales.getCustContact());
+	        	        	                            txtDP.setText(Float.toString(sales.getDp()==null?0:sales.getDp()));
+	        	        	                            txtModel.setText(sales.getPhoneModel());
 	        	        	                           /* statusText.setText(
 	        	        	                                String.format("Selected Row in view: %d. " +
 	        	        	                                    "Selected Row in model: %d.", 
@@ -218,22 +232,17 @@ public class PurchaseHistory extends JFrame {
 		panel.add(txtPrice);
 		txtPrice.setColumns(10);
 		
-		JLabel lblOffer = new JLabel("Offer Details");
-		lblOffer.setBounds(67, 485, 153, 22);
-		panel.add(lblOffer);
+		JLabel lblDP = new JLabel("Delear Price(DP)");
+		lblDP.setBounds(67, 522, 153, 22);
+		panel.add(lblDP);
 		
 		JLabel lblDescription = new JLabel("Description");
-		lblDescription.setBounds(69, 530, 153, 22);
+		lblDescription.setBounds(69, 567, 153, 22);
 		panel.add(lblDescription);
-		
-		txtOffer = new JTextArea();
-		txtOffer.setEditable(false);
-		txtOffer.setBounds(265, 484, 427, 35);
-		panel.add(txtOffer);
 		
 		txtDesc = new JTextArea();
 		txtDesc.setEditable(false);
-		txtDesc.setBounds(265, 529, 427, 35);
+		txtDesc.setBounds(265, 566, 427, 35);
 		panel.add(txtDesc);
 		
 		JLabel lblModel_1 = new JLabel("Model");
@@ -257,12 +266,30 @@ public class PurchaseHistory extends JFrame {
 		JButton btnFetch = new JButton("Fetch");
 		btnFetch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				stockModel.reFetchGrid();
+				salesModel.reFetchGrid();
 				
 			}
 		});
 		btnFetch.setBounds(603, 32, 89, 28);
 		panel.add(btnFetch);
+		
+		lblMargin = new JLabel("Margin");
+		lblMargin.setBounds(67, 485, 128, 26);
+		panel.add(lblMargin);
+		
+		txtMargin = new JTextField();
+		txtMargin.setEditable(false);
+		txtMargin.setBounds(265, 490, 187, 20);
+		panel.add(txtMargin);
+		txtMargin.setColumns(10);
+		
+		txtDP = new JTextField();
+		txtDP.setEditable(false);
+		txtDP.setBounds(265, 523, 187, 20);
+		panel.add(txtDP);
+		txtDP.setColumns(10);
+		
+		
 		
 		
 		
@@ -272,21 +299,21 @@ public class PurchaseHistory extends JFrame {
 	
 
 	
-    class  StockTableModel extends AbstractTableModel {
-        private String[] columnNames = {"Stock Id",
-                                        "Model",
-                                        "IMEI",
-                                        "Selling Price","DP","Distributor","Invoice","Margin","Purchase Date","Place","Offer"
+    class  SalesTableModel extends AbstractTableModel {
+        private String[] columnNames = {"Invoice No","Date","Model","IMEI",
+                                        "SP",
+                                        "DP",
+                                        "Disc","Distributor","Margin","Customer"
                                         };
         
-
+    
 		
-        private List<PhoneStock> data = new ArrayList<PhoneStock>();
-        StockTableModel(){
+        private List<Sales> data = new ArrayList<Sales>();
+        SalesTableModel(){
         	Date fromDate = (Date) fromDatePicker.getModel().getValue();
         	Date toDate = (Date) toDatePicker.getModel().getValue();
         	
-        	data = pss.getPurchaseByRange(fromDate,toDate);
+        	data = ss.getSalesByRange(fromDate,toDate);
         	setIncentives();
         }
         public int getColumnCount() {
@@ -297,24 +324,29 @@ public class PurchaseHistory extends JFrame {
         	Date fromDate = (Date) fromDatePicker.getModel().getValue();
         	Date toDate = (Date) toDatePicker.getModel().getValue();
         	
-        	data = pss.getPurchaseByRange(fromDate,toDate);
+        	data = ss.getSalesByRange(fromDate,toDate);
         	this.fireTableDataChanged();
         	setIncentives();
         	
         }
         
         public void setIncentives(){
-        	float purchase = 0;
-        	float incentives =0;
-        	for(PhoneStock pstock : data){
-        		if(pstock.getDp()!=null){
-        		purchase+=pstock.getDp();
+        	float tsales = 0;
+        	float tprofit =0;
+        	float tpurchase = 0;
+        	for(Sales sale : data){
+        		if(sale.getSalePrice()!=null){
+        			tsales+=sale.getSalePrice();
         		}
-        		if(pstock.getMarginAmount()!=null){
-        		incentives+=pstock.getMarginAmount();
+        		if(sale.getMargin()!=null){
+        		tprofit+=sale.getMargin();
         		}
-        		txtPurchase.setText(Float.toString(purchase));
-        		txtIncentives.setText(Float.toString(incentives));
+        		if(sale.getDp()!=null){
+        			tpurchase+=sale.getDp();
+            		}
+        		txtSales.setText(Float.toString(tsales));
+        		txtIncentives.setText(Float.toString(tprofit));
+        		txtPurchases.setText(Float.toString(tpurchase));
         	}
         }
 
@@ -327,39 +359,30 @@ public class PurchaseHistory extends JFrame {
         }
 
         public Object getValueAt(int row, int col) {
-        	PhoneStock ps = data.get(row);
-        	/*private String accStockId;
-//        	private Timestamp arrivalDate;
-        	private String accModel;
-        	private String phmodelName;
-        	//private Timestamp soldDate;
-        	private String desription;
-        	private String margin;
-        	private Float dp;
-        	private Float sp;*/ 
+        	Sales sale = data.get(row);
+        	
         	 switch (col) {
              case 0:
-                    return ps.getId();
+            	 return sale.getInvoiceId();
              case 1:
-                    return ps.getPhModel();
+                    return sale.getSalesDate();
              case 2:
-                    return ps.getImeiNo();
+                    return sale.getPhoneModel();
              case 3:
-            	 	return ps.getSp();
+            	 	return sale.getImeiNo();
              case 4:
-            	 	return ps.getDp();
+            	 	return sale.getSalePrice();
              case 5:
-         	 	return ps.getDistributor();
+         	 	return sale.getDp();
              case 6:
-                 return ps.getInvoiceNo();
+            	 return sale.getDiscount();
           case 7:
-                 return ps.getMargin();
+        	  return sale.getDistributor();
           case 8:
-         	 	return ps.getArrivalDate();
+         	 	return sale.getMargin();
           case 9:
-         	 	return ps.getPlace();
-          case 10:
-      	 	return ps.getOffer();
+         	 	return sale.getCustName()+":"+sale.getCustContact();
+         
            
              default:
                     throw new IndexOutOfBoundsException();
@@ -368,7 +391,7 @@ public class PurchaseHistory extends JFrame {
         	
         }
         
-        public PhoneStock getRow(int row){
+        public Sales getRow(int row){
         	return data.get(row);
         }
         

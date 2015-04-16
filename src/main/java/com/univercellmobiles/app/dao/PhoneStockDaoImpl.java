@@ -83,7 +83,7 @@ public class PhoneStockDaoImpl implements PhoneStockDao {
 		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		 //between str_to_date('2015-03-16','%Y-%m-%d') and  str_to_date('2015-04-16','%Y-%m-%d');
 		String query = "from PhoneStock where arrivalDate between str_to_date('"+sdf.format(fromDate)+"','%Y-%m-%d') and  str_to_date('"+sdf.format(toDate)+"','%Y-%m-%d')";
-		System.out.println(query);
+	//	System.out.println(query);
 		return getCurrentSession().createQuery(query).list();
 	}
 

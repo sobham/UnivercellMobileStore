@@ -274,6 +274,7 @@ public class SalesBilling extends JFrame {
 					float margin = finalSP - selectedStock.getDp()+ selectedStock.getMargin()*(selectedStock.getDp()/100);
 					sale.setMargin(margin);
 					sale.setDiscount(disc);
+					sale.setDistributor(selectedStock.getDistributor());
 					totalCost+=finalSP;
 					txtGrandTotal.setText(totalCost.toString());
 					//sm.refreshTableData();

@@ -1,5 +1,7 @@
 package com.univercellmobiles.app.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -60,6 +62,15 @@ public class SalesDaoImpl implements SalesDao {
 		catch(Exception e){
 			return 0;
 		}
+	}
+
+	public List<Sales> getSalesByRange(Date fromDate, Date toDate) {
+		// TODO Auto-generated method stub
+		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		 //between str_to_date('2015-03-16','%Y-%m-%d') and  str_to_date('2015-04-16','%Y-%m-%d');
+		String query = "from Sales where salesDate between str_to_date('"+sdf.format(fromDate)+"','%Y-%m-%d') and  str_to_date('"+sdf.format(toDate)+"','%Y-%m-%d')";
+	//	System.out.println(query);
+		return getCurrentSession().createQuery(query).list();
 	}
 
 }
