@@ -65,6 +65,7 @@ public class AddStock extends JFrame {
 	JDatePickerImpl datePicker;
 	JTextArea textAreaOffer;
 	JTextArea textAreaDesc;
+	JComboBox comboBox;
 	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
 			"applicationContext.xml");
 
@@ -225,6 +226,7 @@ public class AddStock extends JFrame {
 				stock.setOffer(textAreaOffer.getText());
 				stock.setPlace(txtPlace.getText());
 				stock.setBp(sp);
+				stock.setDistributor(comboBox.getSelectedItem().toString());
 				float margin = marginper*dp/100;
 				stock.setMarginAmount(margin);
 				totalCost += stock.getSp();
@@ -301,7 +303,7 @@ public class AddStock extends JFrame {
 		    lblDistributor.setBounds(67, 264, 115, 22);
 		    panel.add(lblDistributor);
 		    
-		    JComboBox comboBox = new JComboBox();
+		    comboBox = new JComboBox();
 		    comboBox.setBounds(279, 265, 193, 22);
 		    comboBox.addItem("UNIVERCELL");
 		    comboBox.addItem("OTHERS");
