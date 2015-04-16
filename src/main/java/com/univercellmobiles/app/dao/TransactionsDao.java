@@ -14,6 +14,10 @@ public interface TransactionsDao {
 	public List<Transactions> getAllExpenseDetails();
 	public List<Transactions> getAllAssetDetails();
 	public List<Transactions> getAllInvestmentDetails();
+	public float getAssetsBalance();
+	public float getExpenseBalance();
+	public float getInvestmentOut();
+	public float getInvestmentBalance();
 
 
 }

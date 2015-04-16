@@ -51,4 +51,15 @@ public class SalesDaoImpl implements SalesDao {
 		return getCurrentSession().createQuery("from Sales").list();
 	}
 
+	public float getAllProfit() {
+		// TODO Auto-generated method stub
+		try{
+		float sum = Float.parseFloat(getCurrentSession().createQuery("select sum(margin) from Sales").list().get(0).toString());
+		return sum;
+		}
+		catch(Exception e){
+			return 0;
+		}
+	}
+
 }

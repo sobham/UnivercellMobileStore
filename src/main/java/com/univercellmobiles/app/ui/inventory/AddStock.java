@@ -195,10 +195,25 @@ public class AddStock extends JFrame {
 				PhoneStock stock = new PhoneStock();
 				stock.setImeiNo(txtIMEI.getText());
 				stock.setPhModel(comboModelSearch.getSelectedItem().toString());
-				float marginper = Float.parseFloat(ftfMargin.getText().replace(",", ""));
-				float dp =Float.parseFloat(ftfDP.getText().replace(",", "")) ;
+				String marginString = ftfMargin.getText();
+				String dpString = ftfDP.getText();
+				String spString = ftfSP.getText();
+				float marginper =0;
+				float dp=0;
+				float sp =0;
+				if(!marginString.equals("")){
+					marginper = Float.parseFloat(marginString.replace(",", ""));
+				}
+				if(!dpString.equals("")){
+					dp =Float.parseFloat(dpString.replace(",", "")) ;
+				}
+				
+				if(!spString.equals("")){
+					sp = Float.parseFloat(spString.replace(",", ""));
+				}
+				
 				stock.setMargin(marginper);
-				stock.setSp(Float.parseFloat(ftfSP.getText().replace(",", "")));
+				stock.setSp(sp);
 				stock.setDp(dp);
 				Date arvDate = (Date) datePicker.getModel().getValue();
 				stock.setArrivalDate(arvDate);
@@ -208,9 +223,9 @@ public class AddStock extends JFrame {
 				stock.setDescription(textAreaDesc.getText());
 				stock.setOffer(textAreaOffer.getText());
 				stock.setPlace(txtPlace.getText());
-				stock.setBp(Float.parseFloat(ftfSP.getText().replace(",", "")));
+				stock.setBp(sp);
 				float margin = marginper*dp/100;
-				stock.setMargin(margin);
+				stock.setMarginAmount(margin);
 				totalCost += stock.getSp();
 				pss.add(stock);
 				lblCost.setText(totalCost.toString());
@@ -292,12 +307,23 @@ public class AddStock extends JFrame {
 			      
 			      public void calculateMargin(){
 			    	  if(ftfMargin.getText()!=null &&ftfDP.getText()!=null ){
-			    	 Float margin =  Float.parseFloat(ftfMargin.getText().replace(",", ""));
-			    	 Float dp =  Float.parseFloat(ftfDP.getText().replace(",", ""));
+			    		  String marginString = ftfMargin.getText();
+							String dpString = ftfDP.getText();
+							float margin =0;
+							float dp=0;
+							if(!marginString.equals("")){
+								margin = Float.parseFloat(marginString.replace(",", ""));
+							}
+							if(!dpString.equals("")){
+								dp =Float.parseFloat(dpString.replace(",", "")) ;
+							}
+							
+						
+			    	
 			    	 System.out.println(""+margin +dp);
 			    	 
 			    	 Float marginAmount = (float) 0;
-			    	 if(margin==null || dp ==null){
+			    	 if(margin==0 || dp ==0){
 			    		 marginAmount = (float) 0;
 			    	 }
 			    	 else{

@@ -44,4 +44,9 @@ public class SalesServiceImpl implements SalesService {
 		return salesDao.getAllDetails();
 	}
 
+	public float getAllProfit() {
+		// TODO Auto-generated method stub
+		return salesDao.getAllProfit();
+	}
+
 }

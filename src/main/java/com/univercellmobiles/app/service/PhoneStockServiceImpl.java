@@ -1,5 +1,6 @@
 package com.univercellmobiles.app.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,15 @@ public class PhoneStockServiceImpl implements PhoneStockService{
 	public List<PhoneStock> getAllAvailable() {
 		// TODO Auto-generated method stub
 		return phoneStockDao.getAllAvailable();	}
+
+	public float getCurrentStockValue() {
+		// TODO Auto-generated method stub
+		return phoneStockDao.getCurrentStockValue();
+	}
+
+	public List<PhoneStock> getPurchaseByRange(Date fromDate, Date toDate) {
+		// TODO Auto-generated method stub
+		return phoneStockDao.getPurchaseByRange(fromDate, toDate);
+	}
 
 }

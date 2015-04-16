@@ -14,7 +14,6 @@ public class Transactions {
 	@Id
 	@GeneratedValue
 	private int transId;
-	
 	private Date expenseDate;
 	private Float amount;
 	private int type;

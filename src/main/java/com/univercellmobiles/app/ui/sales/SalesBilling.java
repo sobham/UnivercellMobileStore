@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -48,6 +49,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.Dimension;
+
 import javax.swing.JSeparator;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
@@ -232,6 +234,13 @@ public class SalesBilling extends JFrame {
 				pss.add(stock);*/
 				
 				int selectedRow = tableStock.getSelectedRow();
+				if(selectedRow==-1){
+					 JOptionPane.showMessageDialog(null, "Please select atleast one Stock to Add", 
+                             "No Stock Selected",
+                             JOptionPane.WARNING_MESSAGE);
+					 return;
+				}
+				
 				 int modelRow = 
                  		tableStock.convertRowIndexToModel(selectedRow);
 				PhoneStock selectedStock =null;
@@ -241,19 +250,30 @@ public class SalesBilling extends JFrame {
 				if(selectedStock!=null){
 					
 					Sales sale = new Sales();
-					Float finalSP = Float.parseFloat(txtPrice.getText())-Float.parseFloat(txtDiscount.getText());
+					String discString = txtDiscount.getText();
+					String spString = txtPrice.getText();
+					float sp = 0;
+					float disc = 0;
+					if(!spString.equals("")){
+						sp = Float.parseFloat(spString);
+					}
+					if(!discString.equals("")){
+						disc = Float.parseFloat(discString);
+					}
+					Float finalSP = sp-disc;
 					sale.setSalePrice(finalSP);
 					sale.setStockId(selectedStock.getId());
 					sale.setImeiNo(selectedStock.getImeiNo());
 					sale.setPhoneModel(selectedStock.getPhModel());
 					sale.setSalesDate(new Date());
 					sale.setQty(1);
-					sale.setVat(Float.parseFloat(txtVat.getText()));
+					float vat = txtVat.getText().equals("")?0:Float.parseFloat(txtVat.getText());
+					sale.setVat(vat);
 					sale.setCustContact(txtCustContact.getText());
 					sale.setCustName(txtCustName.getText());
 					float margin = finalSP - selectedStock.getDp()+ selectedStock.getMargin()*(selectedStock.getDp()/100);
 					sale.setMargin(margin);
-					sale.setDiscount(Float.parseFloat(txtDiscount.getText()));
+					sale.setDiscount(disc);
 					totalCost+=finalSP;
 					txtGrandTotal.setText(totalCost.toString());
 					//sm.refreshTableData();

@@ -47,6 +47,7 @@ import com.univercellmobiles.app.service.BrandService;
 import com.univercellmobiles.app.service.FundStatusService;
 import com.univercellmobiles.app.service.PhoneModelService;
 import com.univercellmobiles.app.service.PhoneStockService;
+import com.univercellmobiles.app.service.SalesService;
 import com.univercellmobiles.app.service.TransactionService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
@@ -60,16 +61,19 @@ public class BalanceSheet extends JFrame {
 	private JTable table;
 	private boolean DEBUG = false;
 	FundsModel fm;
-	private Float totalCost = (float) 0.0;
-	private NumberFormat moneyFormat;
-	private NumberFormat percentFormat;
 	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
 			"applicationContext.xml");
 
 	FundStatus currentSelection = null;
-	private JTextField txtAmount;
 	JTextArea textAreaDesc;
 	FundStatusService fs;
+	PhoneStockService pss;
+	TransactionService txs;
+	SalesService ss;
+	private JTextField txtCash;
+	private JTextField txtUniFunds;
+	private JTextField txtReturns;
+	private JTextField txtDeposits;
 
 	/**
 	 * Launch the application.
@@ -92,6 +96,7 @@ public class BalanceSheet extends JFrame {
 	 * Create the frame.
 	 */
 	public BalanceSheet() {
+		setTitle("End of Day Balance Sheet");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(10, 10, 771, 825);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
@@ -101,12 +106,13 @@ public class BalanceSheet extends JFrame {
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		List<Transactions> txList = new ArrayList<Transactions>();
+		new ArrayList<Transactions>();
 
 		
 		fs = (FundStatusService) context.getBean("fundStatusService");
-
-		
+		txs = (TransactionService) context.getBean("transactionService");
+		pss = (PhoneStockService) context.getBean("phoneStockService");
+		ss =  (SalesService) context.getBean("salesService");
 		
 
 		fm = new FundsModel();
@@ -115,17 +121,23 @@ public class BalanceSheet extends JFrame {
 		table.setBounds(67, 461, 627, -116);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(67, 270, 625, 258);
+		scrollPane.setBounds(67, 350, 625, 331);
 		panel.add(scrollPane);
 
-		JButton btnAddExpense = new JButton("Add Expense");
-		btnAddExpense.addActionListener(new ActionListener() {
+		JButton btnAddBalance = new JButton("Add Balance");
+		btnAddBalance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				FundStatus f = new FundStatus();
-			/*	tx.setAmount(Float.parseFloat(txtAmount.getText()));
-				tx.setDescription(textAreaDesc.getText());
-				tx.setExpenseDate(new Date());
-				tx.setType(-1);*/
+				f.setAssets(txs.getAssetsBalance());
+				f.setExpense(txs.getExpenseBalance());
+				f.setFundsout(txs.getInvestmentOut());
+				f.setInvestment(txs.getInvestmentBalance());
+				f.setReturns(Float.parseFloat(txtReturns.getText().equals("")?"0":txtReturns.getText()));
+				f.setStockValue(pss.getCurrentStockValue());
+				f.setUnivercellfunds(Float.parseFloat(txtUniFunds.getText().equals("")?"0":txtUniFunds.getText()));
+				f.setProfit(ss.getAllProfit());
+			    f.setDeposits(Float.parseFloat(txtDeposits.getText().equals("")?"0":txtDeposits.getText()));
+			    f.setCash(Float.parseFloat(txtCash.getText().equals("")?"0":txtCash.getText()));
 				fs.add(f);
 				fm.addRow(f);
 				fm.refreshTableData();
@@ -133,11 +145,11 @@ public class BalanceSheet extends JFrame {
 
 			}
 		});
-		btnAddExpense.setBounds(552, 222, 140, 23);
-		panel.add(btnAddExpense);
+		btnAddBalance.setBounds(552, 301, 140, 23);
+		panel.add(btnAddBalance);
 		
 		
-		JButton btnDeleteBrand = new JButton("Delete Expense");
+		JButton btnDeleteBrand = new JButton("Delete Balance");
 		btnDeleteBrand.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(currentSelection!=null){
@@ -148,29 +160,56 @@ public class BalanceSheet extends JFrame {
 				}
 			}
 		});
-		btnDeleteBrand.setBounds(552, 554, 140, 23);
+		btnDeleteBrand.setBounds(552, 707, 140, 23);
 		panel.add(btnDeleteBrand);
 		
 			//model.setDate(today.getYear(),today.getDate(),today.getDate());
 		
 		 table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		 
-		 JLabel lblAmount = new JLabel("Amount");
-		 lblAmount.setBounds(67, 63, 187, 23);
-		 panel.add(lblAmount);
-		 
-		 txtAmount = new JTextField();
-		 txtAmount.setBounds(291, 61, 180, 20);
-		 panel.add(txtAmount);
-		 txtAmount.setColumns(10);
-		 
 		 JLabel lblDesc = new JLabel("Description");
-		 lblDesc.setBounds(67, 97, 187, 23);
+		 lblDesc.setBounds(64, 179, 187, 23);
 		 panel.add(lblDesc);
 		 
 		 textAreaDesc = new JTextArea();
-		 textAreaDesc.setBounds(291, 96, 401, 83);
+		 textAreaDesc.setBounds(291, 178, 401, 83);
 		 panel.add(textAreaDesc);
+		 
+		 JLabel lblCashInCounter = new JLabel("Cash in Counter");
+		 lblCashInCounter.setBounds(67, 29, 140, 23);
+		 panel.add(lblCashInCounter);
+		 
+		 txtCash = new JTextField();
+		 txtCash.setBounds(291, 30, 180, 20);
+		 panel.add(txtCash);
+		 txtCash.setColumns(10);
+		 
+		 JLabel lblFundsWithUnivercell = new JLabel("Funds with Univercell");
+		 lblFundsWithUnivercell.setBounds(67, 59, 140, 20);
+		 panel.add(lblFundsWithUnivercell);
+		 
+		 txtUniFunds = new JTextField();
+		 txtUniFunds.setBounds(291, 59, 180, 20);
+		 panel.add(txtUniFunds);
+		 txtUniFunds.setColumns(10);
+		 
+		 JLabel lblReturns = new JLabel("Returns");
+		 lblReturns.setBounds(67, 91, 140, 21);
+		 panel.add(lblReturns);
+		 
+		 txtReturns = new JTextField();
+		 txtReturns.setBounds(291, 91, 180, 20);
+		 panel.add(txtReturns);
+		 txtReturns.setColumns(10);
+		 
+		 JLabel lblBankDeposits = new JLabel("Bank Deposits");
+		 lblBankDeposits.setBounds(67, 123, 140, 23);
+		 panel.add(lblBankDeposits);
+		 
+		 txtDeposits = new JTextField();
+		 txtDeposits.setBounds(291, 122, 180, 20);
+		 panel.add(txtDeposits);
+		 txtDeposits.setColumns(10);
 		 
 
 	        

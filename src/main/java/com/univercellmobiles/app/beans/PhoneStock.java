@@ -20,6 +20,7 @@ public class PhoneStock {
 	private Float bp;
 	private Date arrivalDate;
 	private Float margin;
+	private Float marginAmount;
 	private String description;
 	private String offer;
 
@@ -186,6 +187,20 @@ public class PhoneStock {
 
 	public void setDistributor(String distributor) {
 		this.distributor = distributor;
+	}
+
+	/**
+	 * @return the marginAmount
+	 */
+	public Float getMarginAmount() {
+		return marginAmount;
+	}
+
+	/**
+	 * @param marginAmount the marginAmount to set
+	 */
+	public void setMarginAmount(Float marginAmount) {
+		this.marginAmount = marginAmount;
 	}
 
 }

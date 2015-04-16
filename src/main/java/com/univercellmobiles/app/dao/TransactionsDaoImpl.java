@@ -66,4 +66,49 @@ public class TransactionsDaoImpl implements TransactionsDao {
 		return getCurrentSession().createQuery("from Transactions where type = 1").list();
 	}
 
+	public float getAssetsBalance() {
+		// TODO Auto-generated method stub
+		try{
+		float sum = Float.parseFloat(getCurrentSession().createQuery("select sum(amount) from Transactions where type = 2").list().get(0).toString());
+		return sum;
+		}
+		catch(Exception e){
+			return 0;
+		}
+		
+	}
+
+	public float getExpenseBalance() {
+		// TODO Auto-generated method stub
+		try{
+		float sum =  Float.parseFloat(getCurrentSession().createQuery("select sum(amount) from Transactions where type = -1").list().get(0).toString());
+		return sum;
+	}
+	catch(Exception e){
+		return 0;
+	}
+	}
+
+	public float getInvestmentOut() {
+		// TODO Auto-generated method stub
+		try{
+		float sum =  Float.parseFloat(getCurrentSession().createQuery("select sum(amount) from Transactions where type = 1 and amount<0").list().get(0).toString());
+		return sum;
+	}
+	catch(Exception e){
+		return 0;
+	}
+	}
+
+	public float getInvestmentBalance() {
+		// TODO Auto-generated method stub
+		try{
+		float sum =  Float.parseFloat(getCurrentSession().createQuery("select sum(amount) from Transactions where type = 1").list().get(0).toString());
+		return sum;
+	}
+	catch(Exception e){
+		return 0;
+	}
+	}
+
 }

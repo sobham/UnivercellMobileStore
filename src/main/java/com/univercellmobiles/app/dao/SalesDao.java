@@ -11,5 +11,6 @@ public interface SalesDao {
     public Sales getBySalesId(String saleId);
     public void delete(String saleId);
     public List<Sales>    getAllDetails();
+	public float getAllProfit();
 
 }
