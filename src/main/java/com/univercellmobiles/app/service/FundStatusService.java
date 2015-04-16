@@ -14,6 +14,7 @@ public interface FundStatusService {
     public FundStatus getByFundId(int fundStatusId);
     public void delete(int fundStatusId);
     public List<FundStatus> getAllDetails();
+	public List<FundStatus> getCurrentTxnDetails();
 	
 
 }

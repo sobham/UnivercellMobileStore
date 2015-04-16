@@ -52,5 +52,10 @@ public class FundStatusDaoImpl implements FundStatusDao {
 		return getCurrentSession().createQuery("from FundStatus").list();
 	}
 
+	public List<FundStatus> getCurrentTxnDetails() {
+		// TODO Auto-generated method stub
+		return getCurrentSession().createQuery("from FundStatus order by statusId desc").list();
+	}
+
 
 }

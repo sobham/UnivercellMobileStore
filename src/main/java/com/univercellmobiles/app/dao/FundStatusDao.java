@@ -12,6 +12,7 @@ public interface FundStatusDao {
 	public FundStatus getFundsById(int fundStatusId);
 	public void delete(int fundStatusId);
 	public List<FundStatus> getAllDetails();
+	public List<FundStatus> getCurrentTxnDetails();
 
 
 }

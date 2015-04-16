@@ -47,6 +47,11 @@ public class FundStatusServiceImpl implements FundStatusService {
 		
 	}
 
+	public List<FundStatus> getCurrentTxnDetails() {
+		// TODO Auto-generated method stub
+		return fundsDao.getCurrentTxnDetails();
+	}
+
 	
 
 	
