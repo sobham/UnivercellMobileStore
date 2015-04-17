@@ -48,6 +48,7 @@ import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.service.TransactionService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.util.ConfigBuilder;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
@@ -61,8 +62,7 @@ public class FixedAssetManagment extends JFrame {
 	private Float totalCost = (float) 0.0;
 	private NumberFormat moneyFormat;
 	private NumberFormat percentFormat;
-	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
-			"applicationContext.xml");
+	ConfigurableApplicationContext context =ConfigBuilder.getAppContext();
 
 	Transactions currentSelection = null;
 	private JTextField txtAmount;
@@ -78,7 +78,8 @@ public class FixedAssetManagment extends JFrame {
 			public void run() {
 				try {
 					FixedAssetManagment frame = new FixedAssetManagment();
-
+					
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -91,7 +92,7 @@ public class FixedAssetManagment extends JFrame {
 	 * Create the frame.
 	 */
 	public FixedAssetManagment() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(10, 10, 771, 825);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
@@ -103,9 +104,9 @@ public class FixedAssetManagment extends JFrame {
 		List<Transactions> txList = new ArrayList<Transactions>();
 
 		List<String> expenseType = new ArrayList<String>();
-		expenseType.add("Shop Rent");
-		expenseType.add("Staff Salary");
-		expenseType.add("Shop Utility Bills");
+		expenseType.add("Furniture Assets");
+		expenseType.add("Electrical Assets");
+		expenseType.add("Shop Advance");
 		expenseType.add("Misc");
 		txs = (TransactionService) context.getBean("transactionService");
 

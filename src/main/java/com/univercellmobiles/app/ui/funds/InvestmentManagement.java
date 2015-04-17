@@ -48,6 +48,7 @@ import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.service.TransactionService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.util.ConfigBuilder;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
@@ -61,8 +62,7 @@ public class InvestmentManagement extends JFrame {
 	private Float totalCost = (float) 0.0;
 	private NumberFormat moneyFormat;
 	private NumberFormat percentFormat;
-	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
-			"applicationContext.xml");
+	ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
 
 	Transactions currentSelection = null;
 	private JTextField txtAmount;
@@ -78,7 +78,7 @@ public class InvestmentManagement extends JFrame {
 			public void run() {
 				try {
 					InvestmentManagement frame = new InvestmentManagement();
-
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -91,7 +91,7 @@ public class InvestmentManagement extends JFrame {
 	 * Create the frame.
 	 */
 	public InvestmentManagement() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(10, 10, 771, 825);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
@@ -103,10 +103,10 @@ public class InvestmentManagement extends JFrame {
 		List<Transactions> txList = new ArrayList<Transactions>();
 
 		List<String> expenseType = new ArrayList<String>();
-		expenseType.add("Funds for Inventory");
-		expenseType.add("Funds for Assets");
-		expenseType.add("Funds for Stock");
-		expenseType.add("Funds for Misc");
+		expenseType.add("Funds from Loan");
+		expenseType.add("Funds Borrowed");
+		expenseType.add("Funds out");
+		expenseType.add("Funds from Misc");
 		txs = (TransactionService) context.getBean("transactionService");
 
 		

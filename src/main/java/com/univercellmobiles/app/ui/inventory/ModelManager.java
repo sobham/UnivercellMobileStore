@@ -46,9 +46,11 @@ import com.univercellmobiles.app.service.PhoneModelService;
 import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.util.ConfigBuilder;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
+import java.awt.Window.Type;
 
 
 
@@ -59,13 +61,10 @@ public class ModelManager extends JFrame {
 	private Float totalCost = (float) 0.0;
 	private NumberFormat moneyFormat;
 	private NumberFormat percentFormat;
-	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
-			"applicationContext.xml");
+	ConfigurableApplicationContext context ;
 
-	PhoneModelService pms = (PhoneModelService) context
-			.getBean("phoneModelService");
-	BrandService bs = (BrandService) context
-			.getBean("brandService");
+	PhoneModelService pms;
+	BrandService bs;
 	
 	PhoneModel currentSelection = null;
 	private JTextField txtModel;
@@ -95,10 +94,17 @@ public class ModelManager extends JFrame {
 	 * Create the frame.
 	 */
 	public ModelManager() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setAlwaysOnTop(true);
+		setTitle("Phone Model Manager");
+		setType(Type.POPUP);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(10, 10, 771, 825);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
-
+		context = ConfigBuilder.getAppContext();
+		pms = (PhoneModelService) context
+				.getBean("phoneModelService");
+		 bs = (BrandService) context
+					.getBean("brandService");
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(50000, 50000));
 		getContentPane().add(panel);

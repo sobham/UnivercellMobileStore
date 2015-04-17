@@ -48,6 +48,7 @@ import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.service.TransactionService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.util.ConfigBuilder;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
@@ -61,8 +62,7 @@ public class ExpenseManagement extends JFrame {
 	private Float totalCost = (float) 0.0;
 	private NumberFormat moneyFormat;
 	private NumberFormat percentFormat;
-	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
-			"applicationContext.xml");
+	ConfigurableApplicationContext context =ConfigBuilder.getAppContext();
 
 	Transactions currentSelection = null;
 	private JTextField txtAmount;
@@ -78,7 +78,6 @@ public class ExpenseManagement extends JFrame {
 			public void run() {
 				try {
 					ExpenseManagement frame = new ExpenseManagement();
-
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -91,7 +90,7 @@ public class ExpenseManagement extends JFrame {
 	 * Create the frame.
 	 */
 	public ExpenseManagement() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(10, 10, 771, 825);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 

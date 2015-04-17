@@ -15,10 +15,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.univercellmobiles.app.beans.FundStatus;
 import com.univercellmobiles.app.service.FundStatusService;
+import com.univercellmobiles.app.util.ConfigBuilder;
 
 import java.awt.Font;
 import java.awt.Color;
 import java.util.List;
+import java.awt.Window.Type;
 
 public class FirmValue extends JFrame {
 
@@ -32,8 +34,8 @@ public class FirmValue extends JFrame {
 	private JTextField txtTotal;
 	private JTextField txtROI;
 	private JTextField txtGrowth;
-	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
-			"applicationContext.xml");
+	JLabel lblUpdatedDate;
+	ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
 	FundStatusService fs = (FundStatusService) context.getBean("fundStatusService");
 
 	/**
@@ -58,8 +60,10 @@ public class FirmValue extends JFrame {
 	 * Create the frame.
 	 */
 	public FirmValue() {
+		setAlwaysOnTop(true);
+		setType(Type.POPUP);
 		setTitle("Firm Current Value");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 704, 451);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -170,6 +174,11 @@ public class FirmValue extends JFrame {
 		panel.add(txtGrowth);
 		txtGrowth.setColumns(10);
 		
+		lblUpdatedDate = new JLabel("");
+		lblUpdatedDate.setForeground(new Color(255, 0, 255));
+		lblUpdatedDate.setBounds(489, 101, 126, 20);
+		panel.add(lblUpdatedDate);
+		
 		List<FundStatus> fundStatus = fs.getCurrentTxnDetails();
 		FundStatus currFundStatus = fundStatus.get(0);
 		System.out.println(currFundStatus.toString());
@@ -186,6 +195,9 @@ public class FirmValue extends JFrame {
 		txtUniFunds.setText(Float.toString(unifunds));
 		txtBank.setText(Float.toString(bank));
 		txtAssets.setText(Float.toString(assets));
+		if(currFundStatus.getToday()!=null){
+		lblUpdatedDate.setText(currFundStatus.getToday().toString());
+		}
 		
 		
 		float currValue=cash+stock+unifunds+bank+assets;
@@ -198,6 +210,13 @@ public class FirmValue extends JFrame {
 		float ROI = (growth/investment)*100;
 		
 		txtROI.setText(Float.toString(ROI));
+		
+		JLabel lblDetailsUpdatedAs = new JLabel("Details Updated as on ");
+		lblDetailsUpdatedAs.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblDetailsUpdatedAs.setBounds(489, 75, 126, 20);
+		panel.add(lblDetailsUpdatedAs);
+		
+		
 		
 		
 		

@@ -29,6 +29,8 @@ public class Sales {
 	private String custContact;
 	private String Distributor;
 	private Float vat;
+	private String offer;
+	private String description;
 	
 	
 	public int getSaleId() {
@@ -209,6 +211,32 @@ public class Sales {
 	 */
 	public void setDistributor(String distributor) {
 		Distributor = distributor;
+	}
+	/**
+	 * @return the offer
+	 */
+	public String getOffer() {
+		return offer;
+	}
+	/**
+	 * @param offer the offer to set
+	 */
+	public void setOffer(String offer) {
+		this.offer = offer;
+	}
+	
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

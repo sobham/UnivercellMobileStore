@@ -2,17 +2,40 @@ package com.univercellmobiles.app.ui.main;
 
 import java.awt.EventQueue;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+
 import java.awt.BorderLayout;
+
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
+
+import com.univercellmobiles.app.ui.funds.BalanceSheet;
+import com.univercellmobiles.app.ui.funds.ExpenseManagement;
+import com.univercellmobiles.app.ui.funds.FixedAssetManagment;
+import com.univercellmobiles.app.ui.funds.InvestmentManagement;
+import com.univercellmobiles.app.ui.inventory.AddStock;
+import com.univercellmobiles.app.ui.inventory.BrandManager;
+import com.univercellmobiles.app.ui.inventory.ModelManager;
+import com.univercellmobiles.app.ui.inventory.StockSearch;
+import com.univercellmobiles.app.ui.reports.FirmValue;
+import com.univercellmobiles.app.ui.reports.PurchaseHistory;
+import com.univercellmobiles.app.ui.reports.SalesHistory;
+import com.univercellmobiles.app.ui.sales.SalesBilling;
+
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class MainFrontEnd {
 
@@ -57,6 +80,13 @@ public class MainFrontEnd {
 		frmUnivercellMobilesStore.getContentPane().add(panel, BorderLayout.WEST);
 		
 		JButton btnAddPhoneStock = new JButton("Add Phone Stock");
+		btnAddPhoneStock.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddStock frame = new AddStock();
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnAddAccessories = new JButton("Add Accessories");
 		btnAddAccessories.setRolloverEnabled(false);
@@ -67,8 +97,21 @@ public class MainFrontEnd {
 		lblInventory.setForeground(Color.ORANGE);
 		
 		JButton btnManageBrands = new JButton("Manage Brands");
+		btnManageBrands.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BrandManager frame = new BrandManager();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnManageModels = new JButton("Manage Models");
+		btnManageModels.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ModelManager frame = new ModelManager();
+
+				frame.setVisible(true);
+			}
+		});
 		
 		JLabel lblSales = new JLabel("Sales Billing Management");
 		lblSales.setForeground(Color.ORANGE);
@@ -76,10 +119,24 @@ public class MainFrontEnd {
 		lblSales.setBackground(SystemColor.textHighlight);
 		
 		JButton btnPhoneSales = new JButton("Phone Sales");
+		btnPhoneSales.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SalesBilling frame = new SalesBilling();
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnAccessoriesSales = new JButton("Accessories Sales");
 		
 		JButton btnSearchPhones = new JButton("Search Phones");
+		btnSearchPhones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				StockSearch frame = new StockSearch();
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnSearchAccessories = new JButton("Search Accessories");
 		GroupLayout gl_panel = new GroupLayout(panel);
@@ -148,20 +205,50 @@ public class MainFrontEnd {
 		JPanel panel_2 = new JPanel();
 		frmUnivercellMobilesStore.getContentPane().add(panel_2, BorderLayout.EAST);
 		
+		ImagePanel ip = new ImagePanel();
+		frmUnivercellMobilesStore.getContentPane().add(ip,BorderLayout.CENTER);
+		
 		JLabel lblFundsManagement = new JLabel("Funds Management");
 		lblFundsManagement.setForeground(Color.ORANGE);
 		lblFundsManagement.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblFundsManagement.setBackground(SystemColor.textHighlight);
 		
 		JButton btnInvestment = new JButton("Manage Investment");
+		btnInvestment.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				InvestmentManagement frame = new InvestmentManagement();
+				frame.setVisible(true);
+			}
+		});
 		btnInvestment.setAutoscrolls(true);
 		
 		JButton btnExpense = new JButton("Manage Expenses");
+		btnExpense.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ExpenseManagement frame = new ExpenseManagement();
+				frame.setVisible(true);
+			}
+		});
 		btnExpense.setAutoscrolls(true);
 		
 		JButton btnAssets = new JButton("Manage Assets");
+		btnAssets.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				FixedAssetManagment frame = new FixedAssetManagment();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnManageEodCash = new JButton("Manage EOD Cash");
+		btnManageEodCash.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BalanceSheet frame = new BalanceSheet();
+
+				frame.setVisible(true);
+				
+			}
+		});
 		
 		JLabel lblReports = new JLabel("Reports");
 		lblReports.setForeground(Color.ORANGE);
@@ -169,10 +256,32 @@ public class MainFrontEnd {
 		lblReports.setBackground(SystemColor.textHighlight);
 		
 		JButton btnPurchaseHistory = new JButton("Purchase History");
+		btnPurchaseHistory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PurchaseHistory frame = new PurchaseHistory();
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnSalesHistory = new JButton("Sales History");
+		btnSalesHistory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SalesHistory frame = new SalesHistory();
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnFirmValue = new JButton("Firm Value");
+		btnFirmValue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FirmValue frame = new FirmValue();
+				//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				frame.setVisible(true);
+				frame.setAlwaysOnTop(true);
+			}
+		});
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
@@ -225,8 +334,30 @@ public class MainFrontEnd {
 		JButton btnNewButton = new JButton("New button");
 		panel_3.add(btnNewButton);
 		
-		JPanel panel_4 = new JPanel();
-		frmUnivercellMobilesStore.getContentPane().add(panel_4, BorderLayout.CENTER);
+		
+	}
+	
+	class ImagePanel extends JPanel{
+
+	    private BufferedImage image;
+
+	    public ImagePanel() {
+	       try {                
+	    	   File f = new File("src\\main\\resources\\images\\univercellmobiles.gif");
+	           image = ImageIO.read(f);
+	    	  // image = ImageIO.read(new File("../../../../../../resources/univercellmobiles.gif"));
+	       } catch (IOException ex) {
+	            // handle exception...
+	       }
+	    }
+
+	    @Override
+	    protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	        //g.drawImage(image, 0, 0, null); // see javadoc for more info on the parameters          
+	        g.drawImage(image, 150, 100, 600, 500, null);
+	    }
+
 	}
 
 }

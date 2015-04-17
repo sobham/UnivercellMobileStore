@@ -40,9 +40,11 @@ import com.univercellmobiles.app.service.PhoneModelService;
 import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.util.ConfigBuilder;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
+
 import java.awt.Window.Type;
 
 
@@ -69,13 +71,10 @@ public class AddStock extends JFrame {
 	JTextArea textAreaDesc;
 	JComboBox comboBox;
 	JLabel lblSPCost;
-	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
-			"applicationContext.xml");
-
-	AccessoryStockService as = (AccessoryStockService) context
-			.getBean("accessoryStockService");
-	PhoneStockService pss = (PhoneStockService) context
-			.getBean("phoneStockService");
+	
+	ConfigurableApplicationContext context;
+	AccessoryStockService as;
+	PhoneStockService pss;
 
 	/**
 	 * Launch the application.
@@ -101,11 +100,16 @@ public class AddStock extends JFrame {
 		setAlwaysOnTop(true);
 		setType(Type.POPUP);
 		setTitle("Add Phone Inventory");
+		context=ConfigBuilder.getAppContext();
+		 as = (AccessoryStockService) context
+					.getBean("accessoryStockService");
+		 pss = (PhoneStockService) context
+					.getBean("phoneStockService");
 	        percentFormat = NumberFormat.getInstance();
 	        percentFormat.setMaximumIntegerDigits(2);
 	        percentFormat.setMaximumFractionDigits(2);
 	        moneyFormat = NumberFormat.getInstance();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(10, 10, 999, 780);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 

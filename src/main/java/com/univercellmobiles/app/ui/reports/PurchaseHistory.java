@@ -20,6 +20,7 @@ import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.service.SalesService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.util.ConfigBuilder;
 
 import javax.swing.JLabel;
 
@@ -56,6 +57,7 @@ import java.awt.event.ItemListener;
 import java.awt.Dimension;
 
 import javax.swing.JTextArea;
+
 import java.awt.Window.Type;
 
 public class PurchaseHistory extends JFrame {
@@ -68,7 +70,7 @@ public class PurchaseHistory extends JFrame {
 	private boolean DEBUG = false;
 	private Float totalCost = (float) 0.0;
 	JDatePickerImpl fromDatePicker,toDatePicker;
-	 ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+	 ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
 		
 		AccessoryStockService as = (AccessoryStockService) context.getBean("accessoryStockService");
 		PhoneStockService pss = (PhoneStockService) context.getBean("phoneStockService");
@@ -105,7 +107,7 @@ public class PurchaseHistory extends JFrame {
 	public PurchaseHistory() {
 		setType(Type.POPUP);
 		setTitle("Purchase History");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1000, 707);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
@@ -132,23 +134,23 @@ public class PurchaseHistory extends JFrame {
 	    panel.add(toDatePicker);
 	    
 	    lblTotalPurchaseMade = new JLabel("Total Purchases");
-		lblTotalPurchaseMade.setBounds(590, 306, 122, 22);
+		lblTotalPurchaseMade.setBounds(647, 301, 122, 22);
 		panel.add(lblTotalPurchaseMade);
 		
 		txtPurchase = new JTextField();
 		txtPurchase.setEditable(false);
-		txtPurchase.setBounds(716, 307, 187, 20);
+		txtPurchase.setBounds(773, 302, 187, 20);
 		panel.add(txtPurchase);
 		txtPurchase.setColumns(10);
 		
 		lblIncentivesForThe = new JLabel("Incentives");
-		lblIncentivesForThe.setBounds(590, 340, 94, 22);
+		lblIncentivesForThe.setBounds(647, 335, 94, 22);
 		panel.add(lblIncentivesForThe);
 		
 		txtIncentives = new JTextField();
 		txtIncentives.setForeground(Color.GREEN);
 		txtIncentives.setEditable(false);
-		txtIncentives.setBounds(716, 341, 187, 20);
+		txtIncentives.setBounds(773, 336, 187, 20);
 		panel.add(txtIncentives);
 		txtIncentives.setColumns(10);
 		 final StockTableModel  stockModel = new StockTableModel();
@@ -157,7 +159,7 @@ public class PurchaseHistory extends JFrame {
 
 	        //Create the scroll pane and add the table to it.
 	        JScrollPane stockScrollPane = new JScrollPane();
-	        stockScrollPane.setBounds(67, 71, 836, 214);
+	        stockScrollPane.setBounds(67, 71, 893, 214);
 	        //Add the scroll pane to this panel.
 	        panel.add(stockScrollPane);
 	        tableStock = new JTable(stockModel);
@@ -212,40 +214,40 @@ public class PurchaseHistory extends JFrame {
 	       
 		
 		JLabel lblPrice = new JLabel("Selling Price");
-		lblPrice.setBounds(278, 452, 128, 22);
+		lblPrice.setBounds(67, 451, 128, 22);
 		panel.add(lblPrice);
 		
 		txtPrice = new JTextField();
 		txtPrice.setEditable(false);
-		txtPrice.setBounds(476, 453, 187, 20);
+		txtPrice.setBounds(265, 452, 187, 20);
 		panel.add(txtPrice);
 		txtPrice.setColumns(10);
 		
 		JLabel lblOffer = new JLabel("Offer Details");
-		lblOffer.setBounds(278, 485, 153, 22);
+		lblOffer.setBounds(67, 484, 153, 22);
 		panel.add(lblOffer);
 		
 		JLabel lblDescription = new JLabel("Description");
-		lblDescription.setBounds(280, 530, 153, 22);
+		lblDescription.setBounds(69, 529, 153, 22);
 		panel.add(lblDescription);
 		
 		txtOffer = new JTextArea();
 		txtOffer.setEditable(false);
-		txtOffer.setBounds(476, 484, 427, 35);
+		txtOffer.setBounds(265, 483, 427, 35);
 		panel.add(txtOffer);
 		
 		txtDesc = new JTextArea();
 		txtDesc.setEditable(false);
-		txtDesc.setBounds(476, 529, 427, 35);
+		txtDesc.setBounds(265, 528, 427, 35);
 		panel.add(txtDesc);
 		
 		JLabel lblModel_1 = new JLabel("Model");
-		lblModel_1.setBounds(278, 419, 128, 22);
+		lblModel_1.setBounds(67, 418, 128, 22);
 		panel.add(lblModel_1);
 		
 		txtModel = new JTextField();
 		txtModel.setEditable(false);
-		txtModel.setBounds(476, 420, 427, 20);
+		txtModel.setBounds(265, 419, 427, 20);
 		panel.add(txtModel);
 		txtModel.setColumns(10);
 		

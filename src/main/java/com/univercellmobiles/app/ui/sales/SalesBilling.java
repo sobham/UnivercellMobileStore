@@ -20,6 +20,7 @@ import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.service.SalesService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.util.ConfigBuilder;
 
 import javax.swing.JLabel;
 
@@ -54,6 +55,8 @@ import javax.swing.JSeparator;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 
+import java.awt.Window.Type;
+
 public class SalesBilling extends JFrame {
 	private JTextField txtPrice;
 	private JTable table;
@@ -63,7 +66,7 @@ public class SalesBilling extends JFrame {
 	InvoiceTableModel im;
 	private Float totalCost = (float) 0.0;
 	AutocompleteJComboBox comboModelSearch;
-	 ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+	 ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
 		
 		AccessoryStockService as = (AccessoryStockService) context.getBean("accessoryStockService");
 		PhoneStockService pss = (PhoneStockService) context.getBean("phoneStockService");
@@ -71,7 +74,7 @@ public class SalesBilling extends JFrame {
 		private JTextField txtGrandTotal;
 		private JTextField txtCustName;
 		private JTextField txtCustContact;
-		private JTextField textField_2;
+		private JTextField txtInvoiceId;
 		private JTextField txtVat;
 		private JTextField txtDiscount;
 	
@@ -84,7 +87,7 @@ public class SalesBilling extends JFrame {
 			public void run() {
 				try {
 					SalesBilling frame = new SalesBilling();
-				
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -97,7 +100,10 @@ public class SalesBilling extends JFrame {
 	 * Create the frame.
 	 */
 	public SalesBilling() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Phone Billing");
+		setAlwaysOnTop(true);
+		setType(Type.POPUP);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 855, 707);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
@@ -121,7 +127,7 @@ public class SalesBilling extends JFrame {
                 });
         filterText.setBounds(279, 10, 415, 22);
         panel.add(filterText);*/
-		JLabel lblModel = new JLabel("Phone/Accessory Model");
+		JLabel lblModel = new JLabel("Phone Model");
 		lblModel.setBounds(67, 38, 153, 22);
 		panel.add(lblModel);
 		
@@ -200,7 +206,7 @@ public class SalesBilling extends JFrame {
 		panel.add(lblPrice);
 		
 		txtPrice = new JTextField();
-		txtPrice.setBounds(151, 184, 197, 20);
+		txtPrice.setBounds(177, 184, 171, 20);
 		panel.add(txtPrice);
 		txtPrice.setColumns(10);
 		
@@ -275,6 +281,10 @@ public class SalesBilling extends JFrame {
 					sale.setMargin(margin);
 					sale.setDiscount(disc);
 					sale.setDistributor(selectedStock.getDistributor());
+					sale.setDp(selectedStock.getDp());
+					sale.setInvoiceId(txtInvoiceId.getText());
+					sale.setOffer(selectedStock.getOffer());
+					sale.setDescription(selectedStock.getDescription());
 					totalCost+=finalSP;
 					txtGrandTotal.setText(totalCost.toString());
 					//sm.refreshTableData();
@@ -346,7 +356,7 @@ public class SalesBilling extends JFrame {
 		panel.add(lblCustomerName);
 		
 		txtCustName = new JTextField();
-		txtCustName.setBounds(151, 216, 197, 22);
+		txtCustName.setBounds(177, 216, 171, 22);
 		panel.add(txtCustName);
 		txtCustName.setColumns(10);
 		
@@ -355,7 +365,7 @@ public class SalesBilling extends JFrame {
 		panel.add(lblCustomerContact);
 		
 		txtCustContact = new JTextField();
-		txtCustContact.setBounds(482, 216, 210, 21);
+		txtCustContact.setBounds(521, 216, 171, 21);
 		panel.add(txtCustContact);
 		txtCustContact.setColumns(10);
 		
@@ -363,17 +373,18 @@ public class SalesBilling extends JFrame {
 		lblInvoiceNo.setBounds(67, 11, 153, 22);
 		panel.add(lblInvoiceNo);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(279, 12, 413, 20);
-		panel.add(textField_2);
-		textField_2.setColumns(10);
+		txtInvoiceId = new JTextField();
+		txtInvoiceId.setBounds(279, 12, 413, 20);
+		panel.add(txtInvoiceId);
+		txtInvoiceId.setColumns(10);
 		
 		JLabel lblVatt = new JLabel("VAT");
 		lblVatt.setBounds(67, 249, 82, 18);
 		panel.add(lblVatt);
 		
 		txtVat = new JTextField();
-		txtVat.setBounds(151, 248, 197, 20);
+		txtVat.setText("5.0");
+		txtVat.setBounds(177, 248, 171, 20);
 		panel.add(txtVat);
 		txtVat.setColumns(10);
 		
@@ -382,7 +393,8 @@ public class SalesBilling extends JFrame {
 		panel.add(lblDiscount);
 		
 		txtDiscount = new JTextField();
-		txtDiscount.setBounds(482, 184, 210, 20);
+		txtDiscount.setText("0.0");
+		txtDiscount.setBounds(521, 184, 171, 20);
 		panel.add(txtDiscount);
 		txtDiscount.setColumns(10);
 		
@@ -395,11 +407,11 @@ public class SalesBilling extends JFrame {
 		panel.add(separator_1);
 		
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(151, 281, 540, 36);
+		textArea.setBounds(177, 281, 514, 36);
 		panel.add(textArea);
 		
 		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(151, 327, 540, 43);
+		textArea_1.setBounds(177, 327, 514, 43);
 		panel.add(textArea_1);
 		
 		

@@ -20,6 +20,7 @@ import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.service.SalesService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.util.ConfigBuilder;
 
 import javax.swing.JLabel;
 
@@ -48,7 +49,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.Dimension;
+
 import javax.swing.JTextArea;
+import java.awt.Window.Type;
 
 public class StockSearch extends JFrame {
 	private JTextField txtPrice;
@@ -60,7 +63,7 @@ public class StockSearch extends JFrame {
 	private boolean DEBUG = false;
 	private Float totalCost = (float) 0.0;
 	AutocompleteJComboBox comboModelSearch;
-	 ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+	 ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
 		
 		AccessoryStockService as = (AccessoryStockService) context.getBean("accessoryStockService");
 		PhoneStockService pss = (PhoneStockService) context.getBean("phoneStockService");
@@ -89,7 +92,10 @@ public class StockSearch extends JFrame {
 	 * Create the frame.
 	 */
 	public StockSearch() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setAlwaysOnTop(true);
+		setType(Type.POPUP);
+		setTitle("Phone Stock Search");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 771, 707);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
@@ -113,7 +119,7 @@ public class StockSearch extends JFrame {
                 });
         filterText.setBounds(279, 10, 415, 22);
         panel.add(filterText);*/
-		JLabel lblModel = new JLabel("Phone/Accessory Model");
+		JLabel lblModel = new JLabel("Phone Model");
 		lblModel.setBounds(67, 38, 153, 22);
 		panel.add(lblModel);
 		

@@ -20,6 +20,7 @@ import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.service.SalesService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.util.ConfigBuilder;
 
 import javax.swing.JLabel;
 
@@ -57,6 +58,8 @@ import java.awt.Dimension;
 
 import javax.swing.JTextArea;
 
+import java.awt.Window.Type;
+
 public class SalesHistory extends JFrame {
 	private JTextField txtPrice;
 	private JTable table;
@@ -66,7 +69,7 @@ public class SalesHistory extends JFrame {
 	private boolean DEBUG = false;
 	private Float totalCost = (float) 0.0;
 	JDatePickerImpl fromDatePicker,toDatePicker;
-	 ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+	 ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
 		
 		AccessoryStockService as = (AccessoryStockService) context.getBean("accessoryStockService");
 		PhoneStockService pss = (PhoneStockService) context.getBean("phoneStockService");
@@ -93,7 +96,7 @@ public class SalesHistory extends JFrame {
 			public void run() {
 				try {
 					SalesHistory frame = new SalesHistory();
-				
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -106,8 +109,11 @@ public class SalesHistory extends JFrame {
 	 * Create the frame.
 	 */
 	public SalesHistory() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 771, 707);
+		setType(Type.POPUP);
+		setAlwaysOnTop(true);
+		setTitle("Sales History");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 1002, 707);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JPanel panel = new JPanel();
@@ -133,33 +139,33 @@ public class SalesHistory extends JFrame {
 	    panel.add(toDatePicker);
 	    
 	    lblTotalPurchaseMade = new JLabel("Total Sales");
-		lblTotalPurchaseMade.setBounds(379, 295, 122, 22);
+		lblTotalPurchaseMade.setBounds(640, 313, 122, 22);
 		panel.add(lblTotalPurchaseMade);
 		
 		txtSales = new JTextField();
 		txtSales.setEditable(false);
-		txtSales.setBounds(505, 296, 187, 20);
+		txtSales.setBounds(766, 314, 187, 20);
 		panel.add(txtSales);
 		txtSales.setColumns(10);
 		
 		lblIncentivesForThe = new JLabel("Total Profit");
-		lblIncentivesForThe.setBounds(379, 329, 94, 22);
+		lblIncentivesForThe.setBounds(640, 347, 94, 22);
 		panel.add(lblIncentivesForThe);
 		
 		txtIncentives = new JTextField();
 		txtIncentives.setForeground(Color.GREEN);
 		txtIncentives.setEditable(false);
-		txtIncentives.setBounds(505, 330, 187, 20);
+		txtIncentives.setBounds(766, 348, 187, 20);
 		panel.add(txtIncentives);
 		txtIncentives.setColumns(10);
 		
 		lblTotalPruchases = new JLabel("Total Pruchases");
-		lblTotalPruchases.setBounds(379, 369, 94, 22);
+		lblTotalPruchases.setBounds(640, 387, 94, 22);
 		panel.add(lblTotalPruchases);
 		
 		txtPurchases = new JTextField();
 		txtPurchases.setEditable(false);
-		txtPurchases.setBounds(505, 370, 187, 20);
+		txtPurchases.setBounds(766, 388, 187, 20);
 		panel.add(txtPurchases);
 		txtPurchases.setColumns(10);
 		 final SalesTableModel  salesModel = new SalesTableModel();
@@ -168,7 +174,7 @@ public class SalesHistory extends JFrame {
 
 	        //Create the scroll pane and add the table to it.
 	        JScrollPane stockScrollPane = new JScrollPane();
-	        stockScrollPane.setBounds(67, 71, 625, 214);
+	        stockScrollPane.setBounds(67, 71, 886, 214);
 	        //Add the scroll pane to this panel.
 	        panel.add(stockScrollPane);
 	        tableStock = new JTable(salesModel);

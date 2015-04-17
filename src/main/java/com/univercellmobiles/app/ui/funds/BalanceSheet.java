@@ -51,9 +51,11 @@ import com.univercellmobiles.app.service.SalesService;
 import com.univercellmobiles.app.service.TransactionService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.util.ConfigBuilder;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
+
 import java.awt.Window.Type;
 
 
@@ -62,9 +64,7 @@ public class BalanceSheet extends JFrame {
 	private JTable table;
 	private boolean DEBUG = false;
 	FundsModel fm;
-	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
-			"applicationContext.xml");
-
+	ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
 	FundStatus currentSelection = null;
 	JTextArea textAreaDesc;
 	FundStatusService fs;
@@ -99,8 +99,8 @@ public class BalanceSheet extends JFrame {
 	public BalanceSheet() {
 		setAlwaysOnTop(true);
 		setType(Type.POPUP);
-		setTitle("End of Day Balance Sheet");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("End of Day Funds");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(10, 10, 771, 825);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 

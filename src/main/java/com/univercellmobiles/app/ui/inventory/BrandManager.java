@@ -45,9 +45,11 @@ import com.univercellmobiles.app.service.PhoneModelService;
 import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
+import com.univercellmobiles.app.util.ConfigBuilder;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
+import java.awt.Window.Type;
 
 
 
@@ -59,11 +61,9 @@ public class BrandManager extends JFrame {
 	private NumberFormat moneyFormat;
 	private NumberFormat percentFormat;
 	JTextArea textAreaDesc;
-	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
-			"applicationContext.xml");
+	ConfigurableApplicationContext context ;
 
-	BrandService bs = (BrandService) context
-			.getBean("brandService");
+	BrandService bs;
 	private JTextField txtBrandName;
 	private JTextField txtRating;
 	JComboBox comboBoxType;
@@ -91,9 +91,15 @@ public class BrandManager extends JFrame {
 	 * Create the frame.
 	 */
 	public BrandManager() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Brand Manager");
+		setAlwaysOnTop(true);
+		setType(Type.POPUP);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(10, 10, 771, 825);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
+		context = ConfigBuilder.getAppContext();
+		 bs = (BrandService) context
+					.getBean("brandService");
 
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(50000, 50000));
