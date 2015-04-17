@@ -44,7 +44,9 @@ public class FirmValue extends JFrame {
 			public void run() {
 				try {
 					FirmValue frame = new FirmValue();
+					//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					frame.setVisible(true);
+					frame.setAlwaysOnTop(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -171,12 +173,34 @@ public class FirmValue extends JFrame {
 		List<FundStatus> fundStatus = fs.getCurrentTxnDetails();
 		FundStatus currFundStatus = fundStatus.get(0);
 		System.out.println(currFundStatus.toString());
-		txtInvestment.setText(Float.toString(currFundStatus.getInvestment()));
-		txtCash.setText(Float.toString(currFundStatus.getCash()));
-		txtStock.setText(Float.toString(currFundStatus.getStockValue()));
-		txtUniFunds.setText(Float.toString(currFundStatus.getUnivercellfunds()));
-		txtBank.setText(Float.toString(currFundStatus.getDeposits()));
-		txtAssets.setText(Float.toString(currFundStatus.getAssets()));
+		float investment =currFundStatus.getInvestment();
+		float cash =currFundStatus.getCash() ;
+		float stock=currFundStatus.getStockValue();
+		float unifunds=currFundStatus.getUnivercellfunds();
+		float bank =currFundStatus.getDeposits();
+		float assets =currFundStatus.getAssets();
+		
+		txtInvestment.setText(Float.toString(investment));
+		txtCash.setText(Float.toString(cash));
+		txtStock.setText(Float.toString(stock));
+		txtUniFunds.setText(Float.toString(unifunds));
+		txtBank.setText(Float.toString(bank));
+		txtAssets.setText(Float.toString(assets));
+		
+		
+		float currValue=cash+stock+unifunds+bank+assets;
+		txtTotal.setText(Float.toString(currValue));
+		
+		float growth = currValue-investment;
+		
+		txtGrowth.setText(Float.toString(growth));
+		
+		float ROI = (growth/investment)*100;
+		
+		txtROI.setText(Float.toString(ROI));
+		
+		
+		
 		
 		
 		

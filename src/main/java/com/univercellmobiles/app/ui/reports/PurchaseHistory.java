@@ -56,6 +56,7 @@ import java.awt.event.ItemListener;
 import java.awt.Dimension;
 
 import javax.swing.JTextArea;
+import java.awt.Window.Type;
 
 public class PurchaseHistory extends JFrame {
 	private JTextField txtPrice;
@@ -89,7 +90,7 @@ public class PurchaseHistory extends JFrame {
 			public void run() {
 				try {
 					PurchaseHistory frame = new PurchaseHistory();
-				
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -102,8 +103,10 @@ public class PurchaseHistory extends JFrame {
 	 * Create the frame.
 	 */
 	public PurchaseHistory() {
+		setType(Type.POPUP);
+		setTitle("Purchase History");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 771, 707);
+		setBounds(100, 100, 1000, 707);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JPanel panel = new JPanel();
@@ -129,23 +132,23 @@ public class PurchaseHistory extends JFrame {
 	    panel.add(toDatePicker);
 	    
 	    lblTotalPurchaseMade = new JLabel("Total Purchases");
-		lblTotalPurchaseMade.setBounds(379, 295, 122, 22);
+		lblTotalPurchaseMade.setBounds(590, 306, 122, 22);
 		panel.add(lblTotalPurchaseMade);
 		
 		txtPurchase = new JTextField();
 		txtPurchase.setEditable(false);
-		txtPurchase.setBounds(505, 296, 187, 20);
+		txtPurchase.setBounds(716, 307, 187, 20);
 		panel.add(txtPurchase);
 		txtPurchase.setColumns(10);
 		
 		lblIncentivesForThe = new JLabel("Incentives");
-		lblIncentivesForThe.setBounds(379, 329, 94, 22);
+		lblIncentivesForThe.setBounds(590, 340, 94, 22);
 		panel.add(lblIncentivesForThe);
 		
 		txtIncentives = new JTextField();
 		txtIncentives.setForeground(Color.GREEN);
 		txtIncentives.setEditable(false);
-		txtIncentives.setBounds(505, 330, 187, 20);
+		txtIncentives.setBounds(716, 341, 187, 20);
 		panel.add(txtIncentives);
 		txtIncentives.setColumns(10);
 		 final StockTableModel  stockModel = new StockTableModel();
@@ -154,7 +157,7 @@ public class PurchaseHistory extends JFrame {
 
 	        //Create the scroll pane and add the table to it.
 	        JScrollPane stockScrollPane = new JScrollPane();
-	        stockScrollPane.setBounds(67, 71, 625, 214);
+	        stockScrollPane.setBounds(67, 71, 836, 214);
 	        //Add the scroll pane to this panel.
 	        panel.add(stockScrollPane);
 	        tableStock = new JTable(stockModel);
@@ -209,40 +212,40 @@ public class PurchaseHistory extends JFrame {
 	       
 		
 		JLabel lblPrice = new JLabel("Selling Price");
-		lblPrice.setBounds(67, 452, 128, 22);
+		lblPrice.setBounds(278, 452, 128, 22);
 		panel.add(lblPrice);
 		
 		txtPrice = new JTextField();
 		txtPrice.setEditable(false);
-		txtPrice.setBounds(265, 453, 187, 20);
+		txtPrice.setBounds(476, 453, 187, 20);
 		panel.add(txtPrice);
 		txtPrice.setColumns(10);
 		
 		JLabel lblOffer = new JLabel("Offer Details");
-		lblOffer.setBounds(67, 485, 153, 22);
+		lblOffer.setBounds(278, 485, 153, 22);
 		panel.add(lblOffer);
 		
 		JLabel lblDescription = new JLabel("Description");
-		lblDescription.setBounds(69, 530, 153, 22);
+		lblDescription.setBounds(280, 530, 153, 22);
 		panel.add(lblDescription);
 		
 		txtOffer = new JTextArea();
 		txtOffer.setEditable(false);
-		txtOffer.setBounds(265, 484, 427, 35);
+		txtOffer.setBounds(476, 484, 427, 35);
 		panel.add(txtOffer);
 		
 		txtDesc = new JTextArea();
 		txtDesc.setEditable(false);
-		txtDesc.setBounds(265, 529, 427, 35);
+		txtDesc.setBounds(476, 529, 427, 35);
 		panel.add(txtDesc);
 		
 		JLabel lblModel_1 = new JLabel("Model");
-		lblModel_1.setBounds(67, 419, 128, 22);
+		lblModel_1.setBounds(278, 419, 128, 22);
 		panel.add(lblModel_1);
 		
 		txtModel = new JTextField();
 		txtModel.setEditable(false);
-		txtModel.setBounds(265, 420, 427, 20);
+		txtModel.setBounds(476, 420, 427, 20);
 		panel.add(txtModel);
 		txtModel.setColumns(10);
 		
@@ -261,7 +264,7 @@ public class PurchaseHistory extends JFrame {
 				
 			}
 		});
-		btnFetch.setBounds(603, 32, 89, 28);
+		btnFetch.setBounds(561, 32, 89, 28);
 		panel.add(btnFetch);
 		
 		
@@ -353,7 +356,7 @@ public class PurchaseHistory extends JFrame {
              case 6:
                  return ps.getInvoiceNo();
           case 7:
-                 return ps.getMargin();
+                 return ps.getMarginAmount();
           case 8:
          	 	return ps.getArrivalDate();
           case 9:

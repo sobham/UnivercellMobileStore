@@ -43,6 +43,7 @@ import com.univercellmobiles.app.ui.common.custom.StringSearchable;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
+import java.awt.Window.Type;
 
 
 
@@ -54,6 +55,7 @@ public class AddStock extends JFrame {
 	private boolean DEBUG = false;
 	StockModel sm;
 	private Float totalCost = (float) 0.0;
+	private Float totalSPCost = (float) 0.0;
 	JLabel lblCost;
 	JLabel lblMarginValue;
 	private NumberFormat moneyFormat;
@@ -66,6 +68,7 @@ public class AddStock extends JFrame {
 	JTextArea textAreaOffer;
 	JTextArea textAreaDesc;
 	JComboBox comboBox;
+	JLabel lblSPCost;
 	ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
 			"applicationContext.xml");
 
@@ -82,7 +85,7 @@ public class AddStock extends JFrame {
 			public void run() {
 				try {
 					AddStock frame = new AddStock();
-
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -95,12 +98,15 @@ public class AddStock extends JFrame {
 	 * Create the frame.
 	 */
 	public AddStock() {
+		setAlwaysOnTop(true);
+		setType(Type.POPUP);
+		setTitle("Add Phone Inventory");
 	        percentFormat = NumberFormat.getInstance();
 	        percentFormat.setMaximumIntegerDigits(2);
 	        percentFormat.setMaximumFractionDigits(2);
 	        moneyFormat = NumberFormat.getInstance();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(10, 10, 771, 825);
+		setBounds(10, 10, 999, 780);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
 		JPanel panel = new JPanel();
@@ -190,6 +196,12 @@ public class AddStock extends JFrame {
 		txtInvoice.setBounds(279, 33, 207, 22);
 		panel.add(txtInvoice);
 		txtInvoice.setColumns(10);
+		
+		   lblSPCost = new JLabel("0");
+		    lblSPCost.setForeground(Color.GREEN);
+		    lblSPCost.setFont(new Font("Tahoma", Font.BOLD, 11));
+		    lblSPCost.setBounds(873, 633, 79, 18);
+		    panel.add(lblSPCost);
 
 		JButton btnAddStock = new JButton("Add Stock");
 		btnAddStock.addActionListener(new ActionListener() {
@@ -213,7 +225,7 @@ public class AddStock extends JFrame {
 				if(!spString.equals("")){
 					sp = Float.parseFloat(spString.replace(",", ""));
 				}
-				
+				float profit = sp-dp;
 				stock.setMargin(marginper);
 				stock.setSp(sp);
 				stock.setDp(dp);
@@ -227,11 +239,13 @@ public class AddStock extends JFrame {
 				stock.setPlace(txtPlace.getText());
 				stock.setBp(sp);
 				stock.setDistributor(comboBox.getSelectedItem().toString());
-				float margin = marginper*dp/100;
+				float margin =profit+ marginper*dp/100;
 				stock.setMarginAmount(margin);
-				totalCost += stock.getSp();
+				totalCost += stock.getDp();
+				totalSPCost+=stock.getSp();
 				pss.add(stock);
 				lblCost.setText(totalCost.toString());
+				lblSPCost.setText(totalSPCost.toString());
 				sm.addRow(stock);
 				sm.fireTableDataChanged();
 
@@ -240,14 +254,15 @@ public class AddStock extends JFrame {
 		btnAddStock.setBounds(577, 439, 115, 23);
 		panel.add(btnAddStock);
 
-		JLabel lblTotalCost = new JLabel("Total Stock Added Cost : ");
-		lblTotalCost.setBounds(332, 686, 187, 22);
+		JLabel lblTotalCost = new JLabel("Total Purchases : ");
+		lblTotalCost.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTotalCost.setBounds(721, 598, 128, 22);
 		panel.add(lblTotalCost);
 
 		lblCost = new JLabel("0");
 		lblCost.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblCost.setForeground(Color.GREEN);
-		lblCost.setBounds(561, 688, 133, 18);
+		lblCost.setBounds(873, 600, 79, 18);
 		panel.add(lblCost);
 
 		JLabel lblDealerPricedp = new JLabel("Dealer Price (DP)");
@@ -309,6 +324,13 @@ public class AddStock extends JFrame {
 		    comboBox.addItem("OTHERS");
 		    panel.add(comboBox);
 		    
+		    JLabel lblTotalPurchaseSp = new JLabel("Total Purchase SP :");
+		    lblTotalPurchaseSp.setFont(new Font("Tahoma", Font.BOLD, 11));
+		    lblTotalPurchaseSp.setBounds(721, 631, 128, 22);
+		    panel.add(lblTotalPurchaseSp);
+		    
+		 
+		    
 		
 		    
 		    DocumentListener documentListener = new DocumentListener() {
@@ -322,11 +344,13 @@ public class AddStock extends JFrame {
 			      }
 			      
 			      public void calculateMargin(){
-			    	  if(ftfMargin.getText()!=null &&ftfDP.getText()!=null ){
+			    	  if(ftfMargin.getText()!=null &&ftfDP.getText()!=null&&ftfSP.getText()!=null ){
 			    		  String marginString = ftfMargin.getText();
 							String dpString = ftfDP.getText();
+							String spString =ftfSP.getText();
 							float margin =0;
 							float dp=0;
+							float sp =0;
 							if(!marginString.equals("")){
 								margin = Float.parseFloat(marginString.replace(",", ""));
 							}
@@ -334,7 +358,11 @@ public class AddStock extends JFrame {
 								dp =Float.parseFloat(dpString.replace(",", "")) ;
 							}
 							
-						
+							if(!spString.equals("")){
+								sp = Float.parseFloat(spString.replace(",", ""));
+							}
+							
+						float profit = sp-dp;
 			    	
 			    	 System.out.println(""+margin +dp);
 			    	 
@@ -343,7 +371,7 @@ public class AddStock extends JFrame {
 			    		 marginAmount = (float) 0;
 			    	 }
 			    	 else{
-			    	 marginAmount = margin*dp/100;
+			    	 marginAmount = (margin*dp/100)+profit;
 			    	 }
 			    	 lblMarginValue.setText("Rs. " +marginAmount);
 			    	 
@@ -363,8 +391,8 @@ public class AddStock extends JFrame {
 
 
 	class StockModel extends AbstractTableModel {
-		private String[] columnNames = { "Stock Id", "Model", "IMEI", "Margin",
-				"Billing Price" };
+		private String[] columnNames = { "Stock Id", "Model", "IMEI", "Margin %","Margin Amount",
+				"Billing Price","DP" };
 
 		AccessoryStock accessoryStock = new AccessoryStock();
 
@@ -404,12 +432,12 @@ public class AddStock extends JFrame {
 			case 3:
 				return ps.getMargin();
 			case 4:
-				return ps.getSp();
+				return ps.getMarginAmount();
 			case 5:
-				return ps.getDescription();
+				return ps.getSp();
 			case 6:
 				return ps.getDp();
-
+			
 			default:
 				throw new IndexOutOfBoundsException();
 			}

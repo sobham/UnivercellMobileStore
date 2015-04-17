@@ -54,6 +54,7 @@ import com.univercellmobiles.app.ui.common.custom.StringSearchable;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
+import java.awt.Window.Type;
 
 
 
@@ -96,6 +97,8 @@ public class BalanceSheet extends JFrame {
 	 * Create the frame.
 	 */
 	public BalanceSheet() {
+		setAlwaysOnTop(true);
+		setType(Type.POPUP);
 		setTitle("End of Day Balance Sheet");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(10, 10, 771, 825);
@@ -138,6 +141,7 @@ public class BalanceSheet extends JFrame {
 				f.setProfit(ss.getAllProfit());
 			    f.setDeposits(Float.parseFloat(txtDeposits.getText().equals("")?"0":txtDeposits.getText()));
 			    f.setCash(Float.parseFloat(txtCash.getText().equals("")?"0":txtCash.getText()));
+			    f.setToday(new Date());
 				fs.add(f);
 				fm.addRow(f);
 				fm.refreshTableData();
