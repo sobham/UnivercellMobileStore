@@ -1,30 +1,44 @@
 package com.univercellmobiles.app.beans;
 
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="ACCESSORYSTOCK")
-public class AccessoryStock {  
+public class AccessoryStock {
 
 	
 	@Id
-	private String accStockId;
+	@GeneratedValue
+	private int accStockId;
 	private Date arrivalDate;
 	
 	private String accModel;
 	private String phmodelName;
 	private Date soldDate;
 	private String desription;
-	private String margin;
+	private Float margin;
 	private Float dp;
 	private Float sp;
+	private int quantity;
 	
+	/**
+	 * @return the quantity
+	 */
+	public int getQuantity() {
+		return quantity;
+	}
+	/**
+	 * @param quantity the quantity to set
+	 */
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 	public Date getArrivalDate() {
 		return arrivalDate;
 	}
@@ -40,13 +54,13 @@ public class AccessoryStock {
 	/**
 	 * @return the accStockId
 	 */
-	public String getAccStockId() {
+	public int getAccStockId() {
 		return accStockId;
 	}
 	/**
 	 * @param accStockId the accStockId to set
 	 */
-	public void setAccStockId(String accStockId) {
+	public void setAccStockId(int accStockId) {
 		this.accStockId = accStockId;
 	}
 	/**
@@ -112,13 +126,13 @@ public class AccessoryStock {
 	/**
 	 * @return the margin
 	 */
-	public String getMargin() {
+	public Float getMargin() {
 		return margin;
 	}
 	/**
-	 * @param margin the margin to set
+	 * @param f the margin to set
 	 */
-	public void setMargin(String margin) {
+	public void setMargin(Float margin) {
 		this.margin = margin;
 	}
 	/**

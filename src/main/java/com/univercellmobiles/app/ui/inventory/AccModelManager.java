@@ -54,7 +54,7 @@ import java.awt.Window.Type;
 
 
 
-public class ModelManager extends JFrame {
+public class AccModelManager extends JFrame {
 	private JTable table;
 	private boolean DEBUG = false;
 	PhModelModel pmm;
@@ -80,7 +80,7 @@ public class ModelManager extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ModelManager frame = new ModelManager();
+					AccModelManager frame = new AccModelManager();
 
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -93,7 +93,7 @@ public class ModelManager extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ModelManager() {
+	public AccModelManager() {
 		setAlwaysOnTop(true);
 		setTitle("Phone Model Manager");
 		setType(Type.POPUP);

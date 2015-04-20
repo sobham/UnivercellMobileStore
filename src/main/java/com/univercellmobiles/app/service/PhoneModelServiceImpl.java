@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.univercellmobiles.app.beans.PhoneModel;
 import com.univercellmobiles.app.dao.PhoneModelDao;
+import com.univercellmobiles.app.dao.PhoneModelDaoImpl;
 
 
 @Service("phoneModelService")
@@ -16,7 +17,7 @@ public class PhoneModelServiceImpl implements PhoneModelService {
 	
 	
 	@Autowired
-	PhoneModelDao  phoneModelDao;
+	PhoneModelDao  phoneModelDao = new PhoneModelDaoImpl();
 
 	public void add(PhoneModel phoneModel) {
 		// TODO Auto-generated method stub

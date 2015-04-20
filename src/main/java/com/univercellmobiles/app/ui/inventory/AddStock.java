@@ -37,6 +37,7 @@ import com.univercellmobiles.app.beans.AccessoryStock;
 import com.univercellmobiles.app.beans.PhoneStock;
 import com.univercellmobiles.app.service.AccessoryStockService;
 import com.univercellmobiles.app.service.PhoneModelService;
+import com.univercellmobiles.app.service.PhoneModelServiceImpl;
 import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.ui.common.custom.AutocompleteJComboBox;
 import com.univercellmobiles.app.ui.common.custom.StringSearchable;
@@ -71,10 +72,9 @@ public class AddStock extends JFrame {
 	JTextArea textAreaDesc;
 	JComboBox comboBox;
 	JLabel lblSPCost;
-	
-	ConfigurableApplicationContext context;
-	AccessoryStockService as;
-	PhoneStockService pss;
+	ConfigurableApplicationContext context ;
+	PhoneStockService pss ;
+	PhoneModelService pms;
 
 	/**
 	 * Launch the application.
@@ -100,11 +100,6 @@ public class AddStock extends JFrame {
 		setAlwaysOnTop(true);
 		setType(Type.POPUP);
 		setTitle("Add Phone Inventory");
-		context=ConfigBuilder.getAppContext();
-		 as = (AccessoryStockService) context
-					.getBean("accessoryStockService");
-		 pss = (PhoneStockService) context
-					.getBean("phoneStockService");
 	        percentFormat = NumberFormat.getInstance();
 	        percentFormat.setMaximumIntegerDigits(2);
 	        percentFormat.setMaximumFractionDigits(2);
@@ -124,7 +119,8 @@ public class AddStock extends JFrame {
 
 		List<String> modelsList = new ArrayList<String>();
 
-		PhoneModelService pms = (PhoneModelService) context
+		context = ConfigBuilder.getAppContext();
+		pms = (PhoneModelService) context
 				.getBean("phoneModelService");
 
 		modelsList = pms.getAllModelNames();

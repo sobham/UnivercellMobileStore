@@ -44,4 +44,9 @@ public class AccModelServiceImpl  implements AccModelService{
 		return accModelDao.getAllDetails();
 	}
 
+	public List<String> getAllModelNames() {
+		// TODO Auto-generated method stub
+		return accModelDao.getAllModelNames();
+	}
+
 }

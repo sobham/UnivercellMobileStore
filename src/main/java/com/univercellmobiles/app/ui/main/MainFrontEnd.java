@@ -18,6 +18,7 @@ import com.univercellmobiles.app.ui.funds.BalanceSheet;
 import com.univercellmobiles.app.ui.funds.ExpenseManagement;
 import com.univercellmobiles.app.ui.funds.FixedAssetManagment;
 import com.univercellmobiles.app.ui.funds.InvestmentManagement;
+import com.univercellmobiles.app.ui.inventory.AddMobileAccessory;
 import com.univercellmobiles.app.ui.inventory.AddStock;
 import com.univercellmobiles.app.ui.inventory.BrandManager;
 import com.univercellmobiles.app.ui.inventory.ModelManager;
@@ -25,6 +26,7 @@ import com.univercellmobiles.app.ui.inventory.StockSearch;
 import com.univercellmobiles.app.ui.reports.FirmValue;
 import com.univercellmobiles.app.ui.reports.PurchaseHistory;
 import com.univercellmobiles.app.ui.reports.SalesHistory;
+import com.univercellmobiles.app.ui.sales.AccessoryBilling;
 import com.univercellmobiles.app.ui.sales.SalesBilling;
 
 import java.awt.Color;
@@ -89,6 +91,13 @@ public class MainFrontEnd {
 		});
 		
 		JButton btnAddAccessories = new JButton("Add Accessories");
+		btnAddAccessories.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddMobileAccessory frame = new AddMobileAccessory();
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				frame.setVisible(true);
+			}
+		});
 		btnAddAccessories.setRolloverEnabled(false);
 		
 		JLabel lblInventory = new JLabel("Inventory Management");
@@ -128,6 +137,13 @@ public class MainFrontEnd {
 		});
 		
 		JButton btnAccessoriesSales = new JButton("Accessories Sales");
+		btnAccessoriesSales.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AccessoryBilling frame = new AccessoryBilling();
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnSearchPhones = new JButton("Search Phones");
 		btnSearchPhones.addActionListener(new ActionListener() {
@@ -361,3 +377,5 @@ public class MainFrontEnd {
 	}
 
 }
+
+

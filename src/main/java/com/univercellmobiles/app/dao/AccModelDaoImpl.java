@@ -52,6 +52,12 @@ public class AccModelDaoImpl implements AccModelDao {
 		return getCurrentSession().createQuery("from AccModel").list();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<String> getAllModelNames() {
+		// TODO Auto-generated method stub
+		return getCurrentSession().createQuery("select phoneModel from AccModel").list();
+	}
+
 	
 
 		

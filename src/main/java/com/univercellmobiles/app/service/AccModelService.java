@@ -11,5 +11,6 @@ public interface AccModelService {
     public AccModel getByAccModelId(String accModelId);
     public void delete(String accModelId);
     public List<AccModel>    getAllDetails();
+	public List<String> getAllModelNames();
 
 }

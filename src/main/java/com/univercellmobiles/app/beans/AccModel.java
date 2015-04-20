@@ -1,6 +1,7 @@
 package com.univercellmobiles.app.beans;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,7 +11,8 @@ import javax.persistence.Table;
 public class AccModel {
 	
 	@Id
-	private String accModelId;
+	@GeneratedValue
+	private int accModelId;
 	private String modelName;
 	private String phoneModel;
 	private String satus;
@@ -18,13 +20,13 @@ public class AccModel {
 	/**
 	 * @return the accModelId
 	 */
-	public String getAccModelId() {
+	public int getAccModelId() {
 		return accModelId;
 	}
 	/**
 	 * @param accModelId the accModelId to set
 	 */
-	public void setAccModelId(String accModelId) {
+	public void setAccModelId(int accModelId) {
 		this.accModelId = accModelId;
 	}
 	/**
