@@ -28,15 +28,15 @@ public class Main {
 			AccessoryStock accessoryStock = new AccessoryStock();
 
 			accessoryStock.setAccModel("Sony");
-			accessoryStock.setAccStockId("101");
+	//		accessoryStock.setAccStockId("101);
 			accessoryStock.setDp(10f);
 			accessoryStock.setSp(100f);
 		//	accessoryStock.setArrivalDate(null);
 			accessoryStock.setPhmodelName("TS-11");
 			//accessoryStock.setSoldDate(null);
 			accessoryStock.setDesription("test");
-			accessoryStock.setMargin("15");
-			
+		//	accessoryStock.setMargin("15");
+	//		
 
 			as.add(accessoryStock);
 			System.out.println("Added to table");
