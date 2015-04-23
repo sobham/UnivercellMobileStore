@@ -51,7 +51,7 @@ public class StringSearchable implements Searchable<String,String>{
 
 		for ( String s : terms ){
 
-			if (s.contains(value)){
+			if (s.toLowerCase().contains(value.toLowerCase())){
 
 				founds.add(s);
 

@@ -64,6 +64,8 @@ public class ConfirmSale extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public ConfirmSale(final List<Sales> sales) {
+		setAlwaysOnTop(true);
+		setTitle("Confirm Payment");
 		this.sales =sales;
 		setBounds(100, 100, 390, 300);
 		getContentPane().setLayout(null);
@@ -120,7 +122,7 @@ public class ConfirmSale extends JFrame implements ActionListener {
 		txtCash.setColumns(10);
 		
 		lblReturnAmount = new JLabel("Return Amount");
-		lblReturnAmount.setBounds(41, 164, 73, 14);
+		lblReturnAmount.setBounds(41, 164, 86, 14);
 		panel.add(lblReturnAmount);
 		
 		lblBalance = new JLabel("Rs. 0.0");

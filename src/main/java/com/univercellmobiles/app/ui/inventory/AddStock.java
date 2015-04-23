@@ -122,6 +122,8 @@ public class AddStock extends JFrame {
 		context = ConfigBuilder.getAppContext();
 		pms = (PhoneModelService) context
 				.getBean("phoneModelService");
+		pss = (PhoneStockService) context
+				.getBean("phoneStockService");
 
 		modelsList = pms.getAllModelNames();
 

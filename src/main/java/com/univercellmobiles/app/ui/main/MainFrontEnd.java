@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import java.awt.BorderLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.GroupLayout;
@@ -32,6 +33,7 @@ import com.univercellmobiles.app.ui.sales.SalesBilling;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -215,9 +217,6 @@ public class MainFrontEnd {
 		JPanel panel_1 = new JPanel();
 		frmUnivercellMobilesStore.getContentPane().add(panel_1, BorderLayout.NORTH);
 		
-		JButton btnNewButton_1 = new JButton("New button");
-		panel_1.add(btnNewButton_1);
-		
 		JPanel panel_2 = new JPanel();
 		frmUnivercellMobilesStore.getContentPane().add(panel_2, BorderLayout.EAST);
 		
@@ -347,24 +346,18 @@ public class MainFrontEnd {
 		JPanel panel_3 = new JPanel();
 		frmUnivercellMobilesStore.getContentPane().add(panel_3, BorderLayout.SOUTH);
 		
-		JButton btnNewButton = new JButton("New button");
-		panel_3.add(btnNewButton);
-		
 		
 	}
 	
 	class ImagePanel extends JPanel{
 
-	    private BufferedImage image;
+	    private ImageIcon imageIcon;
+	    Image image;
 
 	    public ImagePanel() {
-	       try {                
-	    	   File f = new File("src\\main\\resources\\images\\univercellmobiles.gif");
-	           image = ImageIO.read(f);
-	    	  // image = ImageIO.read(new File("../../../../../../resources/univercellmobiles.gif"));
-	       } catch (IOException ex) {
-	            // handle exception...
-	       }
+	    	imageIcon =new ImageIcon("univercellmobiles.gif");
+	    	System.out.println(imageIcon.getDescription());
+	    	image = imageIcon.getImage();
 	    }
 
 	    @Override

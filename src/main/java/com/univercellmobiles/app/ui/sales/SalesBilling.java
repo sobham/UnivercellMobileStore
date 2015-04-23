@@ -495,11 +495,6 @@ public class SalesBilling extends JFrame {
                     return ps.getImeiNo();
              case 3:
             	 	return ps.getSp();
-             case 4:
-            	 	return ps.getDescription();
-             case 5:
-         	 	return ps.getDp();
-           
              default:
                     throw new IndexOutOfBoundsException();
              }
