@@ -3,9 +3,11 @@ package com.univercellmobiles.app.ui.sales;
 import java.awt.EventQueue;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -14,9 +16,14 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.NumberFormat;
 import java.util.List;
 
 import javax.swing.JPanel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -25,10 +32,11 @@ import com.univercellmobiles.app.beans.Sales;
 import com.univercellmobiles.app.service.AccessoryStockService;
 import com.univercellmobiles.app.service.PhoneStockService;
 import com.univercellmobiles.app.service.SalesService;
+import java.awt.Window.Type;
 
 public class ConfirmSale extends JFrame implements ActionListener {
 	private JTextField txtBillingAmount;
-	private JTextField txtCash;
+	private JFormattedTextField txtCash;
 	private JTextField txtCardNumber;
 	private JTextField txtCardName;
 	JRadioButton rdbtnCash;
@@ -40,6 +48,8 @@ public class ConfirmSale extends JFrame implements ActionListener {
 	JButton btnConfirmPayment ;
 	JLabel lblBalance;
 	float billAmount = 0;
+	SalesBilling salesRef;
+	AccessoryBilling accBillingRef;
 	List<Sales> sales = null;
 	 ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 	 SalesService ss = (SalesService) context.getBean("salesService");
@@ -62,9 +72,18 @@ public class ConfirmSale extends JFrame implements ActionListener {
 
 	/**
 	 * Create the frame.
+	 * @param frame 
 	 */
-	public ConfirmSale(final List<Sales> sales) {
-		setAlwaysOnTop(true);
+	public ConfirmSale(final List<Sales> sales, Object frame) {
+		setType(Type.POPUP);
+		if(frame instanceof SalesBilling){
+			salesRef = (SalesBilling)frame;
+		}
+		else{
+			accBillingRef =(AccessoryBilling)frame;
+		}
+		
+		//setAlwaysOnTop(true);
 		setTitle("Confirm Payment");
 		this.sales =sales;
 		setBounds(100, 100, 390, 300);
@@ -115,11 +134,36 @@ public class ConfirmSale extends JFrame implements ActionListener {
 		lblCashRecieved = new JLabel("Cash Recieved");
 		lblCashRecieved.setBounds(42, 100, 85, 25);
 		panel.add(lblCashRecieved);
-		
-		txtCash = new JTextField();
+		NumberFormat moneyFormat = NumberFormat.getInstance();
+		txtCash = new JFormattedTextField(moneyFormat);
 		txtCash.setBounds(138, 102, 85, 20);
 		panel.add(txtCash);
 		txtCash.setColumns(10);
+		txtCash.setText("0");
+		 DocumentListener documentListener = new DocumentListener() {
+		      public void changedUpdate(DocumentEvent documentEvent) {
+		      }
+		      public void insertUpdate(DocumentEvent documentEvent) {
+		    	  confirmBilling();
+		      }
+		      public void removeUpdate(DocumentEvent documentEvent) {
+		    	 // calculateMargin();
+		      }
+		      
+		      public void confirmBilling(){
+		    	  if(txtCash.getText()!=null&&!txtCash.getText().equals("")){
+						String cash = txtCash.getText().replace(",", "");
+					Float returnAmt = Float.parseFloat(cash)-billAmount;
+					lblBalance.setText(returnAmt.toString());
+		    	  
+		      }
+		      }
+		      
+		     
+		    };
+		 
+		txtCash.getDocument().addDocumentListener(documentListener);
+		
 		
 		lblReturnAmount = new JLabel("Return Amount");
 		lblReturnAmount.setBounds(41, 164, 86, 14);
@@ -156,26 +200,45 @@ public class ConfirmSale extends JFrame implements ActionListener {
 		btnConfirmPayment = new JButton("Confirm Payment");
 		btnConfirmPayment.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String cash = txtCash.getText().replace(",", "");
+				if(Float.parseFloat(cash)<billAmount && rdbtnCash.isSelected()){
+					JOptionPane.showMessageDialog(null, "Cash Paid can not be less then billing Amount.", 
+                             "Payment Invalid",
+                             JOptionPane.WARNING_MESSAGE);
+					return;
+					
+				}
 				if(sales!=null && sales.size()>0){
 					btnConfirmPayment.setEnabled(false);
 				for(Sales sale : sales){
 					ss.add(sale);
 					pss.sellStock(sale.getStockId());
 				}
+				
 				closePayment();
 				
 				
 				}
 			}
 		});
-		btnConfirmPayment.setBounds(226, 205, 115, 23);
+		btnConfirmPayment.setBounds(208, 205, 133, 23);
 		panel.add(btnConfirmPayment);
 		
 		
 	}
 	
+
+
 	public void closePayment(){
 		this.dispose();
+		if(salesRef!=null){
+			salesRef.dispose();
+			
+		
+		}
+		if(accBillingRef!=null){
+			accBillingRef.dispose();
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {

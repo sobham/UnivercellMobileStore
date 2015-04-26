@@ -40,6 +40,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import org.jfree.ui.RefineryUtilities;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -61,9 +62,11 @@ public class SalesBilling extends JFrame {
 	private JTextField txtPrice;
 	private JTable table;
 	  private JTable tableStock;
+	  static SalesBilling frame;
 	  private TableRowSorter<StockTableModel> sorter;
 	private boolean DEBUG = false;
 	InvoiceTableModel im;
+	
 	private Float totalCost = (float) 0.0;
 	AutocompleteJComboBox comboModelSearch;
 	 ConfigurableApplicationContext context = ConfigBuilder.getAppContext();
@@ -77,6 +80,8 @@ public class SalesBilling extends JFrame {
 		private JTextField txtInvoiceId;
 		private JTextField txtVat;
 		private JTextField txtDiscount;
+		JTextArea txtAreaOffer;
+		JTextArea txtAreaDesc;
 	
 	
 	/**
@@ -86,7 +91,7 @@ public class SalesBilling extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SalesBilling frame = new SalesBilling();
+					frame = new SalesBilling();
 					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -101,7 +106,7 @@ public class SalesBilling extends JFrame {
 	 */
 	public SalesBilling() {
 		setTitle("Phone Billing");
-		setAlwaysOnTop(true);
+		//setAlwaysOnTop(true);
 		setType(Type.POPUP);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 855, 707);
@@ -174,7 +179,8 @@ public class SalesBilling extends JFrame {
 	        	        	                            		tableStock.convertRowIndexToModel(viewRow);
 	        	        	                            PhoneStock ps = stockModel.getRow(modelRow);
 	        	        	                            txtPrice.setText(ps.getSp().toString());
-	        	        	                           /* statusText.setText(
+	        	        	                            txtAreaOffer.setText(ps.getOffer());
+	        	        	                            txtAreaDesc.setText(ps.getDescription());	        	        	                           /* statusText.setText(
 	        	        	                                String.format("Selected Row in view: %d. " +
 	        	        	                                    "Selected Row in model: %d.", 
 	        	        	                                    viewRow, modelRow));*/
@@ -330,7 +336,12 @@ public class SalesBilling extends JFrame {
 		JButton btnConfirmSale = new JButton("Confirm Sale");
 		btnConfirmSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConfirmSale confirmBox = new ConfirmSale(im.data);
+				if(im.data.size()==0){
+					JOptionPane.showMessageDialog (null, "Add atleast one Stock for Selling", "No Stock Added for Sales", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				ConfirmSale confirmBox = new ConfirmSale(im.data,frame);
+				RefineryUtilities.centerFrameOnScreen(confirmBox);
 				confirmBox.setVisible(true);
 				
 				
@@ -406,13 +417,13 @@ public class SalesBilling extends JFrame {
 		separator_1.setBounds(67, 378, 625, 2);
 		panel.add(separator_1);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(177, 281, 514, 36);
-		panel.add(textArea);
+		txtAreaOffer = new JTextArea();
+		txtAreaOffer.setBounds(177, 281, 514, 36);
+		panel.add(txtAreaOffer);
 		
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(177, 327, 514, 43);
-		panel.add(textArea_1);
+		txtAreaDesc = new JTextArea();
+		txtAreaDesc.setBounds(177, 327, 514, 43);
+		panel.add(txtAreaDesc);
 		
 		
 	}

@@ -62,6 +62,7 @@ public class AccessoryBilling extends JFrame {
 	private JTextField txtPrice;
 	private JTable table;
 	  private JTable tableStock;
+	  static AccessoryBilling frame;
 	  private TableRowSorter<StockTableModel> sorter;
 	private boolean DEBUG = false;
 	InvoiceTableModel im;
@@ -87,7 +88,7 @@ public class AccessoryBilling extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AccessoryBilling frame = new AccessoryBilling();
+					 frame = new AccessoryBilling();
 				
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -292,7 +293,7 @@ public class AccessoryBilling extends JFrame {
 		JButton btnConfirmSale = new JButton("Confirm Sale");
 		btnConfirmSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConfirmSale confirmBox = new ConfirmSale(im.data);
+				ConfirmSale confirmBox = new ConfirmSale(im.data,frame);
 				confirmBox.setVisible(true);
 				
 				

@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -97,7 +98,7 @@ public class AddStock extends JFrame {
 	 * Create the frame.
 	 */
 	public AddStock() {
-		setAlwaysOnTop(true);
+		//setAlwaysOnTop(true);
 		setType(Type.POPUP);
 		setTitle("Add Phone Inventory");
 	        percentFormat = NumberFormat.getInstance();
@@ -208,6 +209,12 @@ public class AddStock extends JFrame {
 		JButton btnAddStock = new JButton("Add Stock");
 		btnAddStock.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(txtIMEI.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "Please Input the IEMI Number.", 
+                            "InCorrect Input",
+                            JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 				PhoneStock stock = new PhoneStock();
 				stock.setImeiNo(txtIMEI.getText());
 				stock.setPhModel(comboModelSearch.getSelectedItem().toString());
@@ -250,6 +257,12 @@ public class AddStock extends JFrame {
 				lblSPCost.setText(totalSPCost.toString());
 				sm.addRow(stock);
 				sm.fireTableDataChanged();
+				
+				txtIMEI.setText("");
+				ftfDP.setText("0");
+				ftfSP.setText("0");
+				ftfMargin.setText("0");
+				
 
 			}
 		});

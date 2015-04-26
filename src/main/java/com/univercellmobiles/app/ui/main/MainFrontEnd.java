@@ -14,6 +14,9 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
+import javax.swing.Timer;
+
+import org.jfree.ui.RefineryUtilities;
 
 import com.univercellmobiles.app.ui.funds.BalanceSheet;
 import com.univercellmobiles.app.ui.funds.ExpenseManagement;
@@ -25,6 +28,7 @@ import com.univercellmobiles.app.ui.inventory.BrandManager;
 import com.univercellmobiles.app.ui.inventory.ModelManager;
 import com.univercellmobiles.app.ui.inventory.StockSearch;
 import com.univercellmobiles.app.ui.reports.FirmValue;
+import com.univercellmobiles.app.ui.reports.FirmValueChart;
 import com.univercellmobiles.app.ui.reports.PurchaseHistory;
 import com.univercellmobiles.app.ui.reports.SalesHistory;
 import com.univercellmobiles.app.ui.sales.AccessoryBilling;
@@ -40,6 +44,10 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainFrontEnd {
 
@@ -97,6 +105,7 @@ public class MainFrontEnd {
 			public void actionPerformed(ActionEvent e) {
 				AddMobileAccessory frame = new AddMobileAccessory();
 				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setVisible(true);
 			}
 		});
@@ -111,6 +120,7 @@ public class MainFrontEnd {
 		btnManageBrands.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BrandManager frame = new BrandManager();
+				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setVisible(true);
 			}
 		});
@@ -119,7 +129,7 @@ public class MainFrontEnd {
 		btnManageModels.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ModelManager frame = new ModelManager();
-
+				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setVisible(true);
 			}
 		});
@@ -133,6 +143,7 @@ public class MainFrontEnd {
 		btnPhoneSales.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SalesBilling frame = new SalesBilling();
+				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				frame.setVisible(true);
 			}
@@ -143,6 +154,7 @@ public class MainFrontEnd {
 			public void actionPerformed(ActionEvent e) {
 				AccessoryBilling frame = new AccessoryBilling();
 				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setVisible(true);
 			}
 		});
@@ -152,6 +164,7 @@ public class MainFrontEnd {
 			public void actionPerformed(ActionEvent e) {
 				StockSearch frame = new StockSearch();
 				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setVisible(true);
 			}
 		});
@@ -232,6 +245,7 @@ public class MainFrontEnd {
 		btnInvestment.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				InvestmentManagement frame = new InvestmentManagement();
+				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setVisible(true);
 			}
 		});
@@ -251,6 +265,7 @@ public class MainFrontEnd {
 			public void actionPerformed(ActionEvent e) {
 				
 				FixedAssetManagment frame = new FixedAssetManagment();
+				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setVisible(true);
 			}
 		});
@@ -259,6 +274,7 @@ public class MainFrontEnd {
 		btnManageEodCash.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BalanceSheet frame = new BalanceSheet();
+				RefineryUtilities.centerFrameOnScreen(frame);
 
 				frame.setVisible(true);
 				
@@ -274,6 +290,7 @@ public class MainFrontEnd {
 		btnPurchaseHistory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PurchaseHistory frame = new PurchaseHistory();
+				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				frame.setVisible(true);
 			}
@@ -283,6 +300,7 @@ public class MainFrontEnd {
 		btnSalesHistory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SalesHistory frame = new SalesHistory();
+				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				frame.setVisible(true);
 			}
@@ -293,8 +311,42 @@ public class MainFrontEnd {
 			public void actionPerformed(ActionEvent e) {
 				FirmValue frame = new FirmValue();
 				//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				RefineryUtilities.centerFrameOnScreen(frame);
 				frame.setVisible(true);
 				frame.setAlwaysOnTop(true);
+			}
+		});
+		
+		final JLabel lblTime = new JLabel("Time :");
+		
+		final JLabel lblDate = new JLabel("Date :");
+		
+		  final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+		  final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	        ActionListener timerListener = new ActionListener()
+	        {
+	            public void actionPerformed(ActionEvent e)
+	            {
+	                Date date = new Date();
+	                String time = timeFormat.format(date);
+	                String d = dateFormat.format(date);
+	                lblTime.setText("Time : " + time);
+	                lblDate.setText("Date : " + d );
+	            }
+	        };
+	        Timer timer = new Timer(1000, timerListener);
+	        // to make sure it doesn't wait one second at the start
+	        timer.setInitialDelay(0);
+	        timer.start();
+		
+		JButton btnFirmValueGraph = new JButton("Firm Value Graph");
+		btnFirmValueGraph.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				 final FirmValueChart demo = new FirmValueChart("Bar Chart Demo");
+			        demo.pack();
+			        RefineryUtilities.centerFrameOnScreen(demo);
+			        demo.setVisible(true);
 			}
 		});
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
@@ -312,7 +364,10 @@ public class MainFrontEnd {
 								.addComponent(lblReports, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnPurchaseHistory, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
 								.addComponent(btnSalesHistory, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnFirmValue, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+								.addComponent(btnFirmValue, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblTime, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblDate, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnFirmValueGraph, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 						.addGroup(gl_panel_2.createSequentialGroup()
 							.addGap(32)
 							.addComponent(lblFundsManagement, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)))
@@ -339,7 +394,13 @@ public class MainFrontEnd {
 					.addComponent(btnSalesHistory)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnFirmValue)
-					.addContainerGap(52, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnFirmValueGraph)
+					.addPreferredGap(ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+					.addComponent(lblTime)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblDate)
+					.addGap(23))
 		);
 		panel_2.setLayout(gl_panel_2);
 		
@@ -355,8 +416,9 @@ public class MainFrontEnd {
 	    Image image;
 
 	    public ImagePanel() {
-	    	imageIcon =new ImageIcon("univercellmobiles.gif");
-	    	System.out.println(imageIcon.getDescription());
+	    	URL url = ImagePanel.class.getResource("/images/univercellmobiles.gif");
+	    	imageIcon =new ImageIcon(url);
+	    	System.out.println(url.getPath());
 	    	image = imageIcon.getImage();
 	    }
 
@@ -368,7 +430,6 @@ public class MainFrontEnd {
 	    }
 
 	}
-
 }
 
 
