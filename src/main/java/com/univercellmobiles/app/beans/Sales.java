@@ -28,6 +28,7 @@ public class Sales {
 	private String custName;
 	private String custContact;
 	private String Distributor;
+	private String saleType;
 	private Float vat;
 	private String offer;
 	private String description;
@@ -226,6 +227,18 @@ public class Sales {
 	}
 	
 
+	/**
+	 * @return the saleType
+	 */
+	public String getSaleType() {
+		return saleType;
+	}
+	/**
+	 * @param saleType the saleType to set
+	 */
+	public void setSaleType(String saleType) {
+		this.saleType = saleType;
+	}
 	/**
 	 * @return the description
 	 */
